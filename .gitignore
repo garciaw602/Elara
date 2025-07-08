@@ -1,0 +1,71 @@
+===============
+Unity Generated
+===============
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+Visual Studio / JetBrains
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+Unity Cache
+*.apk
+*.aab
+*.keystore
+*.mdb
+*.pdb
+
+Unity Cloud Build
+/[Cc]ache/
+*.symbols.json
+
+OS generated
+.DS_Store
+*.swp
+*.lock
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+Auto-generated or temporary files
+*.bak
+*.orig
+*.log
+
+Crash reports
+sysinfo.txt
+
+Rider
+.idea/
+.sln.iml
+
+Unity Collaborate
+.collab/
+
+Addressable Assets
+Assets/AddressableAssetsData/.bin*
+Assets/AddressableAssetsData/.json
+Assets/AddressableAssetsData/.link.xml
+Assets/AddressableAssetsData//.bin*
+Assets/AddressableAssetsData//.json
+
+Scriptable Build Pipeline cache
+Assets/StreamingAssets/aa/
+
+Others
+*.unitypackage
