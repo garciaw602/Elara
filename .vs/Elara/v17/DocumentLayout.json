@@ -1,10 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\migue\\OneDrive\\Documentos\\Unity\\GenJam2\\Elara\\",
+  "WorkspaceRootPath": "M:\\GenerationColombia\\GameJams\\Elara\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|c:\\users\\migue\\onedrive\\documentos\\unity\\genjam2\\elara\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|m:\\generationcolombia\\gamejams\\elara\\assets\\scripts\\ui\\mainmenuintro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ui\\mainmenuintro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|m:\\generationcolombia\\gamejams\\elara\\assets\\scripts\\ui\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\ui\\mainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EnemyAI.cs",
-              "DocumentMoniker": "C:\\Users\\migue\\OneDrive\\Documentos\\Unity\\GenJam2\\Elara\\Assets\\Scripts\\EnemyAI.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAI.cs",
-              "ToolTip": "C:\\Users\\migue\\OneDrive\\Documentos\\Unity\\GenJam2\\Elara\\Assets\\Scripts\\EnemyAI.cs",
-              "RelativeToolTip": "Assets\\Scripts\\EnemyAI.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAowAkAAAAAAAAAAAAAAA==",
+              "Title": "MainMenuIntro.cs",
+              "DocumentMoniker": "M:\\GenerationColombia\\GameJams\\Elara\\Assets\\Scripts\\UI\\MainMenuIntro.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\MainMenuIntro.cs",
+              "ToolTip": "M:\\GenerationColombia\\GameJams\\Elara\\Assets\\Scripts\\UI\\MainMenuIntro.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\MainMenuIntro.cs",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAcwG8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-09T14:08:03.461Z",
+              "WhenOpened": "2025-07-09T16:22:03.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainMenu.cs",
+              "DocumentMoniker": "M:\\GenerationColombia\\GameJams\\Elara\\Assets\\Scripts\\UI\\MainMenu.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\UI\\MainMenu.cs",
+              "ToolTip": "M:\\GenerationColombia\\GameJams\\Elara\\Assets\\Scripts\\UI\\MainMenu.cs",
+              "RelativeToolTip": "Assets\\Scripts\\UI\\MainMenu.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T15:46:25.14Z",
               "EditorCaption": ""
             }
           ]
