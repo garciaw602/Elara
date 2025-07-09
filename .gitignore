@@ -68,4 +68,5 @@ Scriptable Build Pipeline cache
 Assets/StreamingAssets/aa/
 
 Others
+.vs/
 *.unitypackage
