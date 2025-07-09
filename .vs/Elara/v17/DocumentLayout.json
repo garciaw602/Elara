@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\assets\\scripts\\player\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\assets\\scripts\\camera\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\camera\\cameralook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|j:\\generation colombia\\proyectosgit\\elara\\assets\\scripts\\player\\playeraudiocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CD6CC5DE-E5A0-69EE-C723-C107D6CB9834}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player\\playeraudiocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayerAudioController.cs",
+              "DocumentMoniker": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Player\\PlayerAudioController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerAudioController.cs",
+              "ToolTip": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Player\\PlayerAudioController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerAudioController.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAQwFIAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T03:05:09.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PlayerMovement.cs",
+              "DocumentMoniker": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Player\\PlayerMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerMovement.cs",
+              "ToolTip": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Player\\PlayerMovement.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Player\\PlayerMovement.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAABcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-08T22:00:53.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "cameraLook.cs",
+              "DocumentMoniker": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Camera\\cameraLook.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Camera\\cameraLook.cs",
+              "ToolTip": "J:\\GENERATION COLOMBIA\\ProyectosGit\\Elara\\Assets\\Scripts\\Camera\\cameraLook.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Camera\\cameraLook.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAA1wB8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-08T21:50:41.733Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
