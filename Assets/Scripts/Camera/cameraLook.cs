@@ -23,7 +23,7 @@ public class cameraLook : MonoBehaviour
         // Calculate vertical rotation (pitch). Subtract mouseY because Unity's Y-axis is inverted for camera rotation.
         xRotation -= mouseY;
         // Clamp the vertical rotation to prevent the camera from looking too far up or down (e.g., flipping over).
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -45f, 30f);
         // Apply the calculated vertical rotation to the camera itself (local rotation).
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 

@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;                // Boolean to check if the player is touching the ground
     private PlayerAudioController audioController;
     private bool wasGrounded;
+    public Animator animator;
 
     void Start()
     {
@@ -87,5 +88,28 @@ public class PlayerMovement : MonoBehaviour
         bool isMovingHorizontally = horizontalVelocityMagnitude > 0.1f; // Threshold to prevent sound when almost static
 
         audioController.HandleFootsteps(isMovingHorizontally, isSprinting, isGrounded);
+
+        // --- Animator Updates ---
+        if (animator != null)
+        {
+            // Update Speed parameter for blend tree
+            // Use the magnitude of horizontal velocity for Speed
+            // Make sure the speed is relative to the movement input, not just rigidbody velocity
+            float inputMagnitude = new Vector3(x, 0, z).magnitude; // Get the magnitude of player input
+            animator.SetFloat("Speed", inputMagnitude > 0.1f ? currentSpeed : 0); // Pass actual speed or 0 if no input
+
+            animator.SetBool("IsGrounded", isGrounded); // Update IsGrounded parameter
+            animator.SetBool("IsSprinting", isSprinting); // Update IsSprinting parameter (if not using Speed for blend)
+
+            // Trigger Jump animation when jumping
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                audioController.PlayJumpSound(); // Call jump sound here
+                animator.SetTrigger("Jump"); // Trigger jump animation
+            }
+        }
     }
+
+
 }
