@@ -10,8 +10,8 @@ public class cameraLook : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;// Lock the cursor to the center of the screen
-        Cursor.visible = false;// Make the cursor invisible
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
+        Cursor.visible = false; // Make the cursor invisible
     }
 
     private void Update()
@@ -23,12 +23,12 @@ public class cameraLook : MonoBehaviour
         // Calculate vertical rotation (pitch). Subtract mouseY because Unity's Y-axis is inverted for camera rotation.
         xRotation -= mouseY;
         // Clamp the vertical rotation to prevent the camera from looking too far up or down (e.g., flipping over).
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -45f, 30f);
         // Apply the calculated vertical rotation to the camera itself (local rotation).
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Rotate the player's body horizontally (yaw) based on horizontal mouse movement.
-        // This makes the player turn left/right with the camera.
-        playerBody.Rotate(Vector3.up * mouseX);
+        // CAMBIO: Rotate around the global Y-axis to prevent displacement.
+        playerBody.Rotate(Vector3.up * mouseX, Space.World);
     }
 }
