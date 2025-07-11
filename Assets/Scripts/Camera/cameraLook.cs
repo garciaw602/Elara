@@ -10,8 +10,8 @@ public class cameraLook : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;// Lock the cursor to the center of the screen
-        Cursor.visible = false;// Make the cursor invisible
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
+        Cursor.visible = false; // Make the cursor invisible
     }
 
     private void Update()
@@ -28,7 +28,7 @@ public class cameraLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Rotate the player's body horizontally (yaw) based on horizontal mouse movement.
-        // This makes the player turn left/right with the camera.
-        playerBody.Rotate(Vector3.up * mouseX);
+        // CAMBIO: Rotate around the global Y-axis to prevent displacement.
+        playerBody.Rotate(Vector3.up * mouseX, Space.World);
     }
 }
