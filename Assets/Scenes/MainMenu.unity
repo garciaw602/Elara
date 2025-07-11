@@ -4051,8 +4051,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creditsPanel: {fileID: 1002898156}
   creditsText: {fileID: 1935012621}
-  scrollSpeed: 30
-  scrollEndY: 2400
+  scrollSpeed: 19
+  scrollEndY: 2100
 --- !u!1 &1005276261
 GameObject:
   m_ObjectHideFlags: 0
