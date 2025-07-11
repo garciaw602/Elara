@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        // Lógica de Movimiento
+       
         if (playerDetectedByVision)
         {
             agent.SetDestination(target.position);
