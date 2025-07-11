@@ -4,7 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pausePanel; 
+    public GameObject pausePanel;
+    public GameObject M1911HandgunGameObject;
+
     private bool isPaused = false; 
 
     void Start()
@@ -43,6 +45,20 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f; // Pausa el tiempo del juego
         Cursor.lockState = CursorLockMode.None; // Desbloquea el cursor
         Cursor.visible = true; // Hace visible el cursor
+
+        if (M1911HandgunGameObject != null)
+        {
+            MonoBehaviour[] M1911HandgunScripts = M1911HandgunGameObject.GetComponents<MonoBehaviour>();
+            foreach (MonoBehaviour script in M1911HandgunScripts)
+            {
+                // if (script.GetType() != typeof(PlayerHealth)) // No desactives PlayerHealth
+                // {
+                //     script.enabled = false;
+                // }
+                // O  desactivar *todos* los scripts del jugador:
+                script.enabled = false;
+            }
+        }
     }
 
     public void ResumeGame()
