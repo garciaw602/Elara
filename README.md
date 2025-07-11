@@ -39,7 +39,7 @@ In the year 2040, the world lies in ruins after the outbreak of the Elara-X viru
 
 ---
 
-🕹️ Gameplay
+## 🕹️ Gameplay
 Perspective: Switchable First- and Third-Person
 
 Platform: WebGL / Itch.io
@@ -84,7 +84,7 @@ Narrative-rich exploration and light puzzle-solving
 
 ---
 
-⚙️ Systems & Mechanics
+## ⚙️ Systems & Mechanics
 Minimal HUD with health, ammo, and objective tracking
 
 Inventory system with limited management
@@ -99,7 +99,7 @@ Flashback triggers based on key story items
 
 ---
 
-🌍 World Design
+## 🌍 World Design
 Setting: Earth after the Elara-X viral catastrophe
 
 Locations:
@@ -114,7 +114,7 @@ Underground genetic research facility
 
 ---
 
-🎨 Visual Style
+## 🎨 Visual Style
 Color Palette: Deep reds, decayed greens, muted grays, neon blues
 
 Flashbacks: Warm, soft tones like amber and golden sunlight
@@ -131,7 +131,7 @@ Flickering memories near important objects or people
 
 ---
 
-🔊 Music & Sound Design
+## 🔊 Music & Sound Design
 Sound Palette: Low strings, synthetic textures, ambient pads
 
 Emotional Scoring: Minimalist piano for key moments
@@ -180,7 +180,7 @@ Special thanks to the Game Jam organizers and the communities that inspire creat
 
 ---
 
-📌 Final Quote
+## 📌 Final Quote
 “If I can’t save them… at least I’ll remember their scent.”
 
 
