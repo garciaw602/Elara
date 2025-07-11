@@ -5,9 +5,9 @@ public class FlickeringLight : MonoBehaviour
 {
     private Light lightToFlicker;
 
-    [SerializeField, Range(0f, 3f)] private float minIntensity = 0.5f;
-    [SerializeField, Range(0f, 3f)] private float maxIntensity = 1.2f;
-    [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.1f;
+    [SerializeField, Range(0f, 45f)] private float minIntensity = 0.0f;
+    [SerializeField, Range(0f, 45f)] private float maxIntensity = 52f;
+    [SerializeField, Min(0f)] private float timeBetweenIntensity = 0.05f;
 
     private float currentTimer;
 

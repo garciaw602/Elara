@@ -1,0 +1,680 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a6b9796d1c0440eba061ace5e9dff6, type: 3}
+  m_Name: Grimy, decaying wall texture from a zombie-infested city, with cracked
+    cement, peeling paint, green-black mold, blood smears, and rusted metal patches,
+    hyper-realistic detail, abandoned asylum vibes, cinemat
+  m_EditorClassIdentifier: 
+  assetsData:
+  - rid: 2943300509527965964
+  - rid: 2943300509527965970
+  - rid: 2943300509527965976
+  - rid: 2943300509527965982
+  - rid: 2943300509527965988
+  currentMode: TextToImage
+  m_Data:
+  - rid: 2943300509527965956
+  - rid: 2943300509527965957
+  - rid: 2943300509527965958
+  preRefinedArtifact:
+    rid: -2
+  refinedArtifact:
+    rid: -2
+  selectedArtifact:
+    rid: 2943300509527965970
+  m_Operators:
+  - rid: 2943300509527965959
+  - rid: 2943300509527965960
+  - rid: 2943300509527965961
+  - rid: 2943300509527965962
+  - rid: 2943300509527965963
+  m_PreRefineOperators: []
+  m_ExportedArtifacts: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2943300509527965956
+      type: {class: BookmarkManager, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_BookmarkedArtifacts:
+          m_Values: []
+        m_IsFilterEnabled: 0
+    - rid: 2943300509527965957
+      type: {class: MainUI/UISize, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_NodeListWidth: 300
+        m_NodeListRefineWidth: 300
+        m_AssetListRefineWidth: 200
+    - rid: 2943300509527965958
+      type: {class: GenerateButtonData, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data: 
+    - rid: 2943300509527965959
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965960
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965961
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965962
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965963
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965964
+      type: {class: ImageArtifact, ns: Unity.Muse.Texture, asm: Unity.Muse.Texture}
+      data:
+        mode: TextToImage
+        Guid: 88e2cc54-f0ea-403a-865c-5fe609feb9b7
+        BatchRequestIdentifier: 
+        Seed: 1438995266
+        m_Operators:
+        - rid: 2943300509527965965
+        - rid: 2943300509527965966
+        - rid: 2943300509527965967
+        - rid: 2943300509527965968
+        - rid: 2943300509527965969
+        history:
+        - rid: 2943300509527965964
+        children: []
+        IsPbrMode: 0
+    - rid: 2943300509527965965
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965966
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965967
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965968
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965969
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965970
+      type: {class: ImageArtifact, ns: Unity.Muse.Texture, asm: Unity.Muse.Texture}
+      data:
+        mode: TextToImage
+        Guid: dcdd4c7d-23f4-4134-9484-81d69d5e8350
+        BatchRequestIdentifier: 
+        Seed: 3846210507
+        m_Operators:
+        - rid: 2943300509527965971
+        - rid: 2943300509527965972
+        - rid: 2943300509527965973
+        - rid: 2943300509527965974
+        - rid: 2943300509527965975
+        history:
+        - rid: 2943300509527965970
+        children: []
+        IsPbrMode: 0
+    - rid: 2943300509527965971
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965972
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965973
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965974
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965975
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965976
+      type: {class: ImageArtifact, ns: Unity.Muse.Texture, asm: Unity.Muse.Texture}
+      data:
+        mode: TextToImage
+        Guid: 4c7830bc-fd2c-413b-81ab-9bc25dfe0e98
+        BatchRequestIdentifier: 
+        Seed: 2089667197
+        m_Operators:
+        - rid: 2943300509527965977
+        - rid: 2943300509527965978
+        - rid: 2943300509527965979
+        - rid: 2943300509527965980
+        - rid: 2943300509527965981
+        history:
+        - rid: 2943300509527965976
+        children: []
+        IsPbrMode: 0
+    - rid: 2943300509527965977
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965978
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965979
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965980
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965981
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965982
+      type: {class: ImageArtifact, ns: Unity.Muse.Texture, asm: Unity.Muse.Texture}
+      data:
+        mode: TextToImage
+        Guid: e4415276-8b41-401e-96a1-305cbeb1bf07
+        BatchRequestIdentifier: 
+        Seed: 3863526499
+        m_Operators:
+        - rid: 2943300509527965983
+        - rid: 2943300509527965984
+        - rid: 2943300509527965985
+        - rid: 2943300509527965986
+        - rid: 2943300509527965987
+        history:
+        - rid: 2943300509527965982
+        children: []
+        IsPbrMode: 0
+    - rid: 2943300509527965983
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965984
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965985
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965986
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965987
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965988
+      type: {class: ImageArtifact, ns: Unity.Muse.Texture, asm: Unity.Muse.Texture}
+      data:
+        mode: TextToImage
+        Guid: 9036a5d0-35f4-4ddd-8a25-c5eebc5a0fb6
+        BatchRequestIdentifier: 
+        Seed: 1809127480
+        m_Operators:
+        - rid: 2943300509527965989
+        - rid: 2943300509527965990
+        - rid: 2943300509527965991
+        - rid: 2943300509527965992
+        - rid: 2943300509527965993
+        history:
+        - rid: 2943300509527965988
+        children: []
+        IsPbrMode: 0
+    - rid: 2943300509527965989
+      type: {class: GenerateOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: GenerateOperator
+          key: GenerateOperator
+          version: 1.0.0
+          settings:
+          - TextToImage
+          - 5
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965990
+      type: {class: PromptOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: PromptOperator
+          key: PromptOperator
+          version: 0.0.2
+          settings:
+          - 'Grimy, decaying wall texture from a zombie-infested city, with cracked
+            cement, peeling paint, green-black mold, blood smears, and rusted metal
+            patches, hyper-realistic detail, abandoned asylum vibes, cinematic, grungy,
+            top-down seamless texture for game environment
+
+'
+          - 'cartoon, anime, low detail, blurry, glossy, clean, polished, vibrant
+            colors, fantasy elements, characters, text, watermark, logos, framing,
+            lighting effects, depth of field, soft focus, reflections, symmetrical,
+            flat color, paint splatter, digital painting, low resolution, shadows
+            baked-in, perspective angle, 3D render look
+
+'
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965991
+      type: {class: LoraOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: LoraOperator
+          key: LoraOperator
+          version: 0.0.1
+          settings:
+          - guid1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965992
+      type: {class: ReferenceOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: ReferenceOperator
+          key: ReferenceOperator
+          version: 0.0.2
+          settings:
+          - 
+          - 
+          - 0
+          - 20
+          - 
+          enabled: 1
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
+    - rid: 2943300509527965993
+      type: {class: MaskOperator, ns: Unity.Muse.Common, asm: Unity.Muse.Common}
+      data:
+        m_OperatorData:
+          type: MaskOperator
+          key: MaskOperator
+          version: 0.0.1
+          settings:
+          - 
+          - True
+          - 1
+          enabled: 0
+          assembly: 
+          hideable: 0
+          hidden: 0
+          isRefinement: 0
