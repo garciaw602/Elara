@@ -22,8 +22,11 @@ In the year 2040, the world lies in ruins after the outbreak of the Elara-X viru
 - **Unity** – Game engine
 - **C#** – Programming language
 - **Blender** – 3D modeling
+- **Substance** - 3D Textures
+- **Photoshop** - Image Processing
 - **Krita** – Texturing & concept art
 - **Audacity** – Sound design
+- **FL Studio** - Music composition and production
 
 ---
 
