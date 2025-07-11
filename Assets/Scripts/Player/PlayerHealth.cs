@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; 
     private float currentHealth;   
 
-    public Slider healthBarSlider; // Referencia al Slider de la barra de vida UI
+    public Slider healthBarSlider;
+    public GameObject gameOverPanel;
 
     void Start()
     {
@@ -15,6 +17,11 @@ public class PlayerHealth : MonoBehaviour
         {
             healthBarSlider.maxValue = maxHealth;
             healthBarSlider.value = currentHealth;
+        }
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
         }
     }
 
@@ -39,7 +46,6 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth += amount; 
-        
         currentHealth = Mathf.Min(currentHealth, maxHealth);
 
         
@@ -56,6 +62,44 @@ public class PlayerHealth : MonoBehaviour
         // - Reiniciar la escena
         // - Mostrar una pantalla de "Game Over"
         // - Desactivar el control del jugador
-        gameObject.SetActive(false); // temporal
+        // gameObject.SetActive(false); // temporal
+
+        MonoBehaviour[] playerScripts = GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour script in playerScripts)
+        {
+            if (script != this) // No desactives este mismo script PlayerHealth
+            {
+                script.enabled = false;
+            }
+        }
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        Time.timeScale = 0f; // Pausa el tiempo del juego
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f; // Reanuda el tiempo antes de cargar la escena
+        // Oculta el cursor y lo bloquea
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recarga la escena actual
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f; // Reanuda el tiempo
+        Cursor.visible = true;
+        
+        SceneManager.LoadScene("MainMenu"); // Carga el menú principal
+    }
+
 }
