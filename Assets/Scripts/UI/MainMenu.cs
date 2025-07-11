@@ -11,23 +11,12 @@ public class MainMenu : MonoBehaviour
 
     [Header("Buttons")]
     public Button startButton;
-    public Button optionsButton;
-    public Button creditsButton;
-    public Button quitButton;
 
     void Start()
     {
         if (startButton != null)
             startButton.onClick.AddListener(() => LoadScene(gameSceneName));
 
-        if (optionsButton != null)
-            optionsButton.onClick.AddListener(() => LoadScene(optionsSceneName));
-
-        if (creditsButton != null)
-            creditsButton.onClick.AddListener(() => LoadScene(creditsSceneName));
-
-        if (quitButton != null)
-            quitButton.onClick.AddListener(QuitGame);
     }
 
     void LoadScene(string sceneName)
