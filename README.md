@@ -183,4 +183,7 @@ Special thanks to the Game Jam organizers and the communities that inspire creat
 ## 📌 Final Quote
 “If I can’t save them… at least I’ll remember their scent.”
 
+❤️ Created with love and a touch of nostalgia during our Thirds Game Jam (final project) by:
+Carlos Rabelo, Miguel Benavides, Julian Trujillo, and Wilson García.
+
 
