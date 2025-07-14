@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class PlayerMovementLevel1 : MonoBehaviour
     {
         // Capturamos la entrada del teclado (W, A, S, D o las teclas de flecha)
         float horizontal = Input.GetAxis("Horizontal");  // A/D o flechas izquierda/derecha
+        
         float vertical = Input.GetAxis("Vertical");      // W/S o flechas arriba/abajo
 
         // Creamos la dirección de movimiento basada en las teclas
