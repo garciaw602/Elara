@@ -87,21 +87,9 @@ public class EnemyAI : MonoBehaviour
                 Vector3 startRay = transform.position + Vector3.up * 0.5f;
                 Vector3 endRay = target.position + Vector3.up * 0.5f;
 
-            if (playerDetectedByDistance)
-            {
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-                
-                if (Vector3.Angle(transform.forward, directionToTarget) < fieldOfViewAngle / 2)
+                if (!Physics.Linecast(startRay, endRay, visionObstacleMask))
                 {
-                    // Comprobar la l�nea de visi�n (raycast)
-                    RaycastHit hit;
-                    Vector3 startRay = transform.position + Vector3.up * 0.5f; // Desde los "ojos" del enemigo
-                    Vector3 endRay = target.position + Vector3.up * 0.5f; // Hacia el "centro" del jugador
-
-                    if (!Physics.Linecast(startRay, endRay, visionObstacleMask))
-                    {
-                        playerDetectedByVision = true;
-                    }
+                    playerDetectedByVision = true;
                 }
             }
         }
@@ -145,39 +133,8 @@ public class EnemyAI : MonoBehaviour
         // L�gica de movimiento de la IA
         if (playerDetectedByVision || playerDetectedByDistance)
         {
-            agent.speed = chaseSpeed;
             agent.SetDestination(target.position);
-            isWaitingAtPatrolPoint = false;
-        }
-        else // Si el jugador no est� detectado en absoluto, patrullar
-        {
-            agent.speed = patrolSpeed; // Asegura la velocidad de patrulla
-
-            if (patrolPoints != null && patrolPoints.Length > 0)
-            {
-                Patrol();
-            }
-            else
-            {
-                // Si no hay puntos de patrulla y no hay jugador, simplemente detenerse.
-                if (agent.hasPath)
-                {
-                    agent.ResetPath();
-                }
-            }
-        }
-    }
-
-    void Patrol()
-    {
-        if (isWaitingAtPatrolPoint)
-        {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0)
-            {
-                isWaitingAtPatrolPoint = false;
-                GoToNextPatrolPoint();
-            }
+            LookAtTarget();
         }
         else
         {
@@ -186,12 +143,6 @@ public class EnemyAI : MonoBehaviour
                 agent.ResetPath(); // Detiene el movimiento si no se detecta al jugador
             }
         }
-    }
-
-    void GoToNextPatrolPoint()
-    {
-        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length; // Ciclo entre los puntos
-        agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
     }
 
     void LookAtTarget()
