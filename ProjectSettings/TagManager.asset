@@ -17,9 +17,9 @@ TagManager:
   - Floor
   - 
   - MuseTextureLayer
-  - 
-  - 
-  - 
+  - Weapon
+  - Player
+  - Interactable
   - 
   - 
   - 
