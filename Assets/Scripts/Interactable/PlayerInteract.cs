@@ -36,8 +36,9 @@ public class PlayerInteract : MonoBehaviour
         Vector3 direction = cam.transform.forward;
         Vector3 end = origin + direction * interactRange;
 
-        lineRenderer.SetPosition(0, origin);
-        lineRenderer.SetPosition(1, end);
+        //Debug Line to see the rayCast
+        //lineRenderer.SetPosition(0, origin);
+        //lineRenderer.SetPosition(1, end);
 
         RaycastHit hit;
         if (Physics.Raycast(origin, direction, out hit, interactRange, interactLayer))
