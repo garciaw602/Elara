@@ -15,20 +15,20 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // Intenta obtener el componente EnemyHealth del objeto colisionado
-        EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+        EnemyHealth enemyHealth2 = collision.gameObject.GetComponent<EnemyHealth>();//******** (cambiar)
 
         // Si el objeto tiene un componente EnemyHealth, significa que es un enemigo
-        if (enemyHealth != null)
+        if (enemyHealth2 != null)
         {
-            enemyHealth.TakeDamage(damageAmount); // Causa daño al enemigo
+            enemyHealth2.TakeDamage(damageAmount); // Causa daño al enemigo
         }
        
 
         // Instancia un efecto de impacto 
-        //if (impactEffectPrefab != null)
-        //{
-        //    Instantiate(impactEffectPrefab, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
-        //}
+        if (impactEffectPrefab != null)
+        {
+           Instantiate(impactEffectPrefab, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+        }
         
         // Destruye la bala después de impactar
         Destroy(gameObject);

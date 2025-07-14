@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAudioController audioController;
     private bool wasGrounded;
     public Animator animator;
-
+    private bool jumpedInitiated = false; // Indica si el jugador ha iniciado un salto.
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody>();           // Get the Rigidbody component at the start of the game
@@ -40,7 +40,11 @@ public class PlayerMovement : MonoBehaviour
         // If player was not grounded but is now grounded, it means they just landed
         if (!wasGrounded && currentIsGrounded)
         {
-            audioController.PlayLandSound();
+            if (jumpedInitiated)
+            {
+                audioController.PlayLandSound();
+                jumpedInitiated = false; // Resetear la bandera una vez que aterriza del salto
+            }
         }
 
         // Update the isGrounded flag for the rest of the current frame's logic
@@ -74,12 +78,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // --- Jumping ---
-        // Debug.Log moved here to be right before the jump check
-        Debug.Log("Jump input detected and isGrounded: " + isGrounded);
+        
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             audioController.PlayJumpSound(); // Call jump sound here
+            jumpedInitiated = true; // El jugador ha iniciado un salto
         }
 
         // --- Footstep Logic ---
