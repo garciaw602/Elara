@@ -3,10 +3,16 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float maxHealth = 50f; 
-    private float currentHealth;   
+    private float currentHealth;
+    public GameObject ammoBoxPrefab;//*****CAJA DE MUNICION
+    public float spawnOffsetY = 0.5f;//***** Un valor de 0.5f es un buen punto de partida, ajusta según el tamaño de tu caja
 
-    
     public float destroyDelay = 0f; //  Poner un retardo o no (0f = inmediato)
+
+
+ 
+
+
 
     void Start()
     {
@@ -17,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount; // Reduce la vida actual
-        Debug.Log(gameObject.name + " ha recibido " + amount + " de daño. Vida actual: " + currentHealth);
+    //    Debug.Log(gameObject.name + " ha recibido " + amount + " de daño. Vida actual: " + currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -28,6 +34,26 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " ha muerto!");
+        
+        
+        
+        
+        
+        //********* LÓGICA DE LA CAJA DE MUNICIÓN AL MORIR 
+        if (ammoBoxPrefab == null) // Añade esta comprobación
+        {
+            Debug.LogError("¡El Prefab de la caja de munición NO está asignado en el Inspector para " + gameObject.name + "!");
+            return; // Salir de la función si el prefab no está asignado
+        }
+        Vector3 spawnPosition = transform.position + Vector3.up * spawnOffsetY;
+        Instantiate(ammoBoxPrefab, spawnPosition, Quaternion.identity);
+        // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN ---
+
+
+
+
+
+
 
         //  Agregar efectos de muerte:
         // - Reproducir una animación de muerte
