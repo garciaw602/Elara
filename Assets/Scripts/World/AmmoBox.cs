@@ -1,27 +1,52 @@
 using UnityEngine;
 
-public class AmmoBox : MonoBehaviour
+public class AmmoBox : MonoBehaviour, IInteractable
 {
     public int ammo = 10;
+    public string itemName = "Loot Ammo";
+
     private AudioSource audioSource;
-    void Awake() // Usamos Awake porque se llama apenas el objeto es creado
+    private bool used = false;
+
+    public bool destroyOnUse = true;
+    public float destroyDelay = 0.1f;
+
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
         {
-            Debug.LogWarning("AmmoBoxLoot requiere un componente AudioSource en el mismo GameObject.", this);
-            return; 
+            Debug.LogWarning("AmmoBox requires an AudioSource component.", this);
+        }
+    }
+
+    public void Interact()
+    {
+        if (used) return;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddAmmo(ammo);
+            //Debug.Log($"Added {ammo} ammo. Total: {GameManager.Instance.gunAmmo}");
         }
 
-        // Si hay un AudioClip asignado al AudioSource en el Inspector del Prefab, lo reproducimos.
-        if (audioSource.clip != null)
+        if (audioSource != null && audioSource.clip != null)
         {
-            audioSource.PlayOneShot(audioSource.clip); // Reproduce el sonido una vez
+            audioSource.PlayOneShot(audioSource.clip);
         }
-        else
+
+        if (destroyOnUse)
         {
-            Debug.LogWarning("No hay AudioClip asignado al AudioSource en AmmoBoxLoot Prefab.", this);
+            used = true;
+            GetComponent<Renderer>().enabled = false;
+            GetComponent<Collider>().enabled = false;
+            Destroy(gameObject, destroyDelay);
         }
+    }
+
+    public string GetName()
+    {
+        return itemName;
     }
 }
