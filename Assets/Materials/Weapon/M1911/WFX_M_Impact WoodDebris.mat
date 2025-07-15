@@ -25,7 +25,7 @@ Material:
     m_TexEnvs:
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 6499ec80e8fac904592dfa142f3436ae, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.1, y: 0.1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
@@ -35,6 +35,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmisColor: {r: 0.2, g: 0.2, b: 0.2, a: 0}
-    - _TintColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+    - _TintColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.5019608}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
