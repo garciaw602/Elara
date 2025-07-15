@@ -3,22 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class GameUIPauseMenu : MonoBehaviour
 {
+    public GameUIManager uiManager;
+
     public void ResumeGame()
     {
-        Time.timeScale = 1f;
-        gameObject.SetActive(false); // Hides the pause menu
+        uiManager.CloseAllUI();
     }
 
-    public void RestartScene()
+    public void RestartGame()
     {
+        // Recarga la escena actual
+
         Time.timeScale = 1f;
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 
-    public void ReturnToMainMenu()
+    public void GoToMainMenu()
     {
+
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); 
+        // Carga la escena del menú principal
+        SceneManager.LoadScene("MainMenu");
     }
 }
