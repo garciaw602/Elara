@@ -36,7 +36,6 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Is canvas Open" + uiManager.isCanvasOpen);
         if (Input.GetKeyDown(KeyCode.Mouse0) && uiManager != null && uiManager.isCanvasOpen!=true)
         {
             if (Time.time > shotRateTime && GameManager.Instance.gunAmmo > 0) 

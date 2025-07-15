@@ -3,9 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class GameUIPauseMenu : MonoBehaviour
 {
-    public GameObject pausePanel;
-
-    private bool isPaused = false;
     public GameUIManager uiManager;
 
     public void ResumeGame()
