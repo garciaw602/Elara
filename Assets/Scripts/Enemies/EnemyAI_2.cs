@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI; 
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI_2 : MonoBehaviour
 {
     public Transform target; 
     public float detectionRadius = 10f; // Distancia para detectar al jugador
@@ -93,7 +93,6 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-
         // --- Comportamiento del Enemigo ---
         if (playerDetectedByVision)
         {
@@ -128,44 +127,6 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-
-    // --------------------Patrullaje reiniciado por spawneo----------------------------
-    public void SetPatrolPoints(Transform[] newPatrolPoints)
-    {
-        if (newPatrolPoints != null && newPatrolPoints.Length > 0)
-        {
-            patrolPoints = newPatrolPoints;
-            currentPatrolPointIndex = 0; // Reinicia el índice al asignar nueva ruta
-        }
-        else
-        {
-            patrolPoints = null; // Si no se dan puntos, no patrulles
-            //if (agent != null && agent.hasPath)
-            //{
-            //    agent.ResetPath(); // Detén el patrullaje actual
-            //}
-            Debug.LogWarning("EnemyAI: No se proporcionaron puntos de patrulla válidos. El enemigo no patrullará.");
-        }
-    }
-
-    // Asegúrate de que ResetAIState() se llame después de SetPatrolPoints() si se usa con un pool.
-    public void ResetAIState()
-    {
-        currentPatrolPointIndex = 0; // Asegúrate de que empieza desde el primer punto
-        isWaitingAtPatrolPoint = false;
-        waitTimer = 0f;
-        if (agent != null)
-        {
-            agent.ResetPath();
-            agent.speed = patrolSpeed;
-            // Después de resetear, si hay puntos de patrulla, ir al primero.
-            if (patrolPoints != null && patrolPoints.Length > 0)
-            {
-                agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
-            }
-        }
-    }
-    // --------------------Patrullaje reiniciado por spawneo----------------------------
     void Patrol()
     {
         if (isWaitingAtPatrolPoint)
