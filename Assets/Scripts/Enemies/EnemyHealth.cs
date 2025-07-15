@@ -9,14 +9,19 @@ public class EnemyHealth : MonoBehaviour
 
     public float destroyDelay = 0f; //  Poner un retardo o no (0f = inmediato)
 
+    private EnemySpawner mySpawner;
 
- 
 
 
 
     void Start()
     {
         currentHealth = maxHealth; 
+    }
+
+    public void SetSpawner(EnemySpawner spawner)
+    {
+        mySpawner = spawner;
     }
 
     // Este método será llamado por la bala cuando impacte
@@ -49,7 +54,10 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(ammoBoxPrefab, spawnPosition, Quaternion.identity);
         // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN ---
 
-
+        if (mySpawner != null)
+        {
+            mySpawner.EnemyDied(this.gameObject);
+        }
 
 
 
