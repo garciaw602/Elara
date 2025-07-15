@@ -23,6 +23,7 @@ public class Gun : MonoBehaviour
     private Quaternion initialHammerRotation; // Rotación inicial del Hammer.
     private bool isHammerRotating = false;    // Indica si el Hammer está rotando.
     private float hammerRotationTimer = 0f;   // Temporizador para la rotación del Hammer.
+    public GameUIManager uiManager; 
 
     void Start()
     {
@@ -35,7 +36,8 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        Debug.Log("Is canvas Open" + uiManager.isCanvasOpen);
+        if (Input.GetKeyDown(KeyCode.Mouse0) && uiManager != null && uiManager.isCanvasOpen!=true)
         {
             if (Time.time > shotRateTime && GameManager.Instance.gunAmmo > 0) 
             {
