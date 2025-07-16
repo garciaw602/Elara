@@ -380,6 +380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  healthBarUIPrefab: {fileID: 2736670093137886403, guid: 548d44c6d25553847a03eeb51b0dbc58, type: 3}
+  healthBarOffset: {x: 0, y: 1, z: 0}
   ammoBoxPrefab: {fileID: 7632464448091665512, guid: 1ebd3a3b092d2c947890a1d9780d55bd, type: 3}
   spawnOffsetY: 0.5
   destroyDelay: 0

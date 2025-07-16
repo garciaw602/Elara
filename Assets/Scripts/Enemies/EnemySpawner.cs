@@ -4,22 +4,19 @@ using System.Collections.Generic; // Necesario para List
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Configuración del Spawner")]
-    [Tooltip("El prefab del enemigo que se va a generar.")]
-    public GameObject enemyPrefab;
-    [Tooltip("Tiempo que tarda un enemigo en reaparecer después de ser derrotado.")]
-    public float respawnTime = 5f;
-    // [Tooltip("¿El spawner debe generar enemigos al inicio del juego hasta el límite de Max Active Enemies?")]
-    // public bool spawnOnStart = true; // <--- ELIMINAMOS O DESACTIVAMOS ESTA VARIABLE
-    [Tooltip("Máximo de enemigos que este spawner puede tener vivos al mismo tiempo.")]
-    public int maxActiveEnemies = 3;
+    // ----- Configuración del Spawner -------
+    public GameObject enemyPrefab; //El prefab del enemigo que se va a generar
+    public float respawnTime = 5f; //Tiempo que tarda un enemigo en reaparecer después de ser derrotado
+    // ¿El spawner debe generar enemigos al inicio del juego hasta el límite de Max Active Enemies?
+    // public bool spawnOnStart = true;
+    public int maxActiveEnemies = 3;//Máximo de enemigos que este spawner puede tener vivos al mismo tiempo
 
-    [Header("Puntos de Aparición (Spawn Points)")]
-    [Tooltip("Arrastra GameObjects vacíos aquí para definir dónde pueden aparecer los enemigos. Un enemigo aparecerá en un punto aleatorio y disponible de esta lista.")]
+    //------- Puntos de Aparición (Spawn Points) -------
+    //Arrastrar los GameObjects vacíos aquí para definir dónde pueden aparecer los enemigos. Un enemigo aparecerá en un punto aleatorio y disponible de esta lista
     public Transform[] spawnPoints;
 
-    [Header("Múltiples Rutas de Patrulla para Enemigos Spawneados")]
-    [Tooltip("Define aquí diferentes rutas de patrulla. Cada enemigo generado por este spawner recibirá una ruta aleatoria de esta lista.")]
+    //Múltiples Rutas de Patrulla para Enemigos Spawneados
+    //Define aquí diferentes rutas de patrulla. Cada enemigo generado por este spawner recibirá una ruta aleatoria de esta lista
     public List<PatrolRouteGroup> patrolRoutes = new List<PatrolRouteGroup>();
 
     [System.Serializable]
@@ -30,19 +27,15 @@ public class EnemySpawner : MonoBehaviour
     }
 
     // --- NUEVAS VARIABLES PARA ACTIVACIÓN POR PROXIMIDAD ---
-    [Header("Activación del Spawner por Proximidad")]
-    [Tooltip("Si está activado, el spawner solo generará enemigos cuando el jugador esté dentro del rango de activación.")]
-    public bool activateOnPlayerProximity = true;
-    [Tooltip("Distancia a la que el jugador debe acercarse al spawner para que este comience a generar enemigos.")]
-    public float activationDistance = 20f;
+    //------- Activación del Spawner por Proximidad -------
+    public bool activateOnPlayerProximity = true;  //Si está activado, el spawner solo generará enemigos cuando el jugador esté dentro del rango de activación
+    public float activationDistance = 20f; //Distancia a la que el jugador debe acercarse al spawner para que este comience a generar enemigos
     private bool spawnerActivated = false; // Indica si el spawner ya ha sido activado por proximidad
 
-    // --- Variables de Respawn por Proximidad (Mantener si aún lo quieres) ---
-    [Header("Configuración de Respawn por Proximidad")]
-    [Tooltip("Habilitar respawn solo cuando el jugador esté lejos del área de spawn.")]
-    public bool enableProximityRespawn = true;
-    [Tooltip("Distancia mínima que el jugador debe estar del spawner para que el respawn ocurra.")]
-    public float minDistanceForRespawn = 15f;
+    // --- Variables de Respawn por Proximidad ---
+    // ------- Configuración de Respawn por Proximidad -------
+    public bool enableProximityRespawn = true; // Habilitar respawn solo cuando el jugador esté lejos del área de spawn
+    public float minDistanceForRespawn = 15f; // Distancia mínima que el jugador debe estar del spawner para que el respawn ocurra.
 
 
     private int currentActiveEnemiesCount = 0;
@@ -91,12 +84,11 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogWarning("El Spawner '" + gameObject.name + "' no tiene rutas de patrulla definidas. Los enemigos no patrullarán.", this);
         }
 
-        // --- CAMBIO CLAVE EN START ---
         // Si la activación por proximidad está activa, el spawner no genera nada al inicio.
         // Si no está activa, o si el player no se encontró, establece el timer para el primer spawn normal.
         if (activateOnPlayerProximity)
         {
-            spawnerActivated = false; // Asegura que el spawner empieza inactivo
+            spawnerActivated = false; // Asegurarse que el spawner empieza inactivo
             // No hacemos ningún spawn inicial aquí.
         }
         else

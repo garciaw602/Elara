@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe12261553bff546846ded4ecafd71f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.4844184
+      value: -57.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe12261553bff546846ded4ecafd71f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.20399952
+      value: -0.61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe12261553bff546846ded4ecafd71f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5365035
+      value: 23.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4fe12261553bff546846ded4ecafd71f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -396,10 +396,11 @@ MonoBehaviour:
   visionObstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  zombieVoiceClips:
-  - {fileID: 8300000, guid: 5bd60d83e4819ae4ab85716a4309d384, type: 3}
-  - {fileID: 8300000, guid: 2cb05ae63086f1546869da9941a45ac0, type: 3}
-  voiceDetectionRadius: 8
+  patrolSpeed: 2
+  chaseSpeed: 4
+  patrolPoints: []
+  patrolPointThreshold: 1
+  waitTimeAtPatrolPoint: 1
 --- !u!114 &9132029919888312978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
+  healthBarUIPrefab: {fileID: 2736670093137886403, guid: 548d44c6d25553847a03eeb51b0dbc58, type: 3}
+  healthBarOffset: {x: 0, y: 2, z: 0}
   ammoBoxPrefab: {fileID: 8769572635365532203, guid: bfa77ada8f735a849b525dc6ae66824d, type: 3}
   spawnOffsetY: 0.5
   destroyDelay: 0
