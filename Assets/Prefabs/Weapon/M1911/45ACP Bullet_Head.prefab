@@ -186,3 +186,5 @@ MonoBehaviour:
   damageAmount: 10
   lifeTime: 3
   impactEffectPrefab: {fileID: 100002, guid: ac1aa04288fad804ba1cd769f4377aaf, type: 3}
+  enemyImpactEffectPrefab: {fileID: 3672626785686510003, guid: 4c1f17412de3c25428cb51473aba1a20, type: 3}
+  enemyImpactParticlesDuration: 0.3

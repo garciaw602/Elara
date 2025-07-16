@@ -9,37 +9,63 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     [Tooltip("Tiempo que tarda un enemigo en reaparecer después de ser derrotado.")]
     public float respawnTime = 5f;
-    [Tooltip("¿El spawner debe generar enemigos al inicio del juego hasta el límite de Max Active Enemies?")]
-    public bool spawnOnStart = true;
+    // [Tooltip("¿El spawner debe generar enemigos al inicio del juego hasta el límite de Max Active Enemies?")]
+    // public bool spawnOnStart = true; // <--- ELIMINAMOS O DESACTIVAMOS ESTA VARIABLE
     [Tooltip("Máximo de enemigos que este spawner puede tener vivos al mismo tiempo.")]
     public int maxActiveEnemies = 3;
 
     [Header("Puntos de Aparición (Spawn Points)")]
-    [Tooltip("Arrastra GameObjects vacíos aquí para definir dónde pueden aparecer los enemigos. Un enemigo aparecerá en un punto aleatorio de esta lista.")]
+    [Tooltip("Arrastra GameObjects vacíos aquí para definir dónde pueden aparecer los enemigos. Un enemigo aparecerá en un punto aleatorio y disponible de esta lista.")]
     public Transform[] spawnPoints;
 
-    // --- ¡NUEVA CONFIGURACIÓN PARA MÚLTIPLES RUTAS DE PATRULLA! ---
     [Header("Múltiples Rutas de Patrulla para Enemigos Spawneados")]
     [Tooltip("Define aquí diferentes rutas de patrulla. Cada enemigo generado por este spawner recibirá una ruta aleatoria de esta lista.")]
     public List<PatrolRouteGroup> patrolRoutes = new List<PatrolRouteGroup>();
 
-    [System.Serializable] // Permite que esta clase se serialice y aparezca en el Inspector
+    [System.Serializable]
     public class PatrolRouteGroup
     {
         [Tooltip("Define los puntos de una ruta de patrulla específica para los enemigos.")]
         public Transform[] routePoints;
     }
-    // -----------------------------------------------------------
 
+    // --- NUEVAS VARIABLES PARA ACTIVACIÓN POR PROXIMIDAD ---
+    [Header("Activación del Spawner por Proximidad")]
+    [Tooltip("Si está activado, el spawner solo generará enemigos cuando el jugador esté dentro del rango de activación.")]
+    public bool activateOnPlayerProximity = true;
+    [Tooltip("Distancia a la que el jugador debe acercarse al spawner para que este comience a generar enemigos.")]
+    public float activationDistance = 20f;
+    private bool spawnerActivated = false; // Indica si el spawner ya ha sido activado por proximidad
+
+    // --- Variables de Respawn por Proximidad (Mantener si aún lo quieres) ---
     [Header("Configuración de Respawn por Proximidad")]
     [Tooltip("Habilitar respawn solo cuando el jugador esté lejos del área de spawn.")]
     public bool enableProximityRespawn = true;
     [Tooltip("Distancia mínima que el jugador debe estar del spawner para que el respawn ocurra.")]
     public float minDistanceForRespawn = 15f;
 
+
     private int currentActiveEnemiesCount = 0;
     private float nextSpawnTime = 0f;
     private Transform playerTransform;
+
+    private List<int> availableSpawnPointIndices;
+    private Dictionary<GameObject, int> enemySpawnPointMap;
+
+    void Awake()
+    {
+        InitializeSpawnPoints();
+    }
+
+    void InitializeSpawnPoints()
+    {
+        availableSpawnPointIndices = new List<int>();
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            availableSpawnPointIndices.Add(i);
+        }
+        enemySpawnPointMap = new Dictionary<GameObject, int>();
+    }
 
     void Start()
     {
@@ -50,7 +76,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("EnemySpawner: No se encontró un GameObject con la etiqueta 'Player'. Respawn por proximidad podría no funcionar correctamente.", this);
+            Debug.LogWarning("EnemySpawner: No se encontró un GameObject con la etiqueta 'Player'. Respawn y activación por proximidad podrían no funcionar correctamente.", this);
         }
 
         if (spawnPoints == null || spawnPoints.Length == 0)
@@ -60,25 +86,56 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        // Verificar que hay al menos una ruta de patrulla si se espera que los enemigos patrullen
         if (patrolRoutes.Count == 0 || (patrolRoutes.Count == 1 && patrolRoutes[0].routePoints.Length == 0))
         {
             Debug.LogWarning("El Spawner '" + gameObject.name + "' no tiene rutas de patrulla definidas. Los enemigos no patrullarán.", this);
         }
 
-        nextSpawnTime = Time.time + respawnTime;
-
-        if (spawnOnStart)
+        // --- CAMBIO CLAVE EN START ---
+        // Si la activación por proximidad está activa, el spawner no genera nada al inicio.
+        // Si no está activa, o si el player no se encontró, establece el timer para el primer spawn normal.
+        if (activateOnPlayerProximity)
         {
+            spawnerActivated = false; // Asegura que el spawner empieza inactivo
+            // No hacemos ningún spawn inicial aquí.
+        }
+        else
+        {
+            // Comportamiento original si no hay activación por proximidad: Generar todos al inicio.
             for (int i = 0; i < maxActiveEnemies; i++)
             {
                 SpawnEnemy();
             }
         }
+        // El nextSpawnTime siempre se inicializa para futuras comprobaciones de spawn.
+        nextSpawnTime = Time.time + respawnTime;
     }
 
     void Update()
     {
+        // --- NUEVA LÓGICA DE ACTIVACIÓN POR PROXIMIDAD ---
+        if (activateOnPlayerProximity && !spawnerActivated)
+        {
+            if (playerTransform != null)
+            {
+                float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+                if (distanceToPlayer <= activationDistance)
+                {
+                    spawnerActivated = true; // El spawner ha sido activado
+                    Debug.Log("Spawner " + gameObject.name + " activado por proximidad del jugador.");
+                    // Una vez activado, podemos forzar el primer spawn o esperar el timer
+                    // Aquí generamos todos los enemigos iniciales que el spawner debe tener.
+                    for (int i = 0; i < maxActiveEnemies; i++)
+                    {
+                        SpawnEnemy();
+                    }
+                    nextSpawnTime = Time.time + respawnTime; // Reinicia el timer para el siguiente respawn
+                }
+            }
+            return; // Si no está activado aún, no hagas nada más en este Update
+        }
+
+        // --- Lógica existente (ahora solo se ejecuta si el spawner está activado) ---
         if (currentActiveEnemiesCount >= maxActiveEnemies)
         {
             return;
@@ -94,7 +151,7 @@ public class EnemySpawner : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
             if (distanceToPlayer < minDistanceForRespawn)
             {
-                nextSpawnTime = Time.time + 1f;
+                nextSpawnTime = Time.time + 1f; // Espera un poco más si el jugador está cerca
                 return;
             }
         }
@@ -116,12 +173,27 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        // Seleccionar un punto de aparición aleatorio
-        int randomSpawnIndex = Random.Range(0, spawnPoints.Length);
-        Transform selectedSpawnPoint = spawnPoints[randomSpawnIndex];
+        if (availableSpawnPointIndices.Count == 0)
+        {
+            InitializeSpawnPoints();
+            Debug.Log("Todos los spawn points han sido utilizados. Reiniciando la lista de disponibles.");
+            if (availableSpawnPointIndices.Count == 0)
+            {
+                Debug.LogWarning("No hay spawn points disponibles para generar el enemigo.", this);
+                return;
+            }
+        }
 
-        // Instancia el enemigo
+        int randomAvailableIndexInList = Random.Range(0, availableSpawnPointIndices.Count);
+        int selectedSpawnPointOriginalIndex = availableSpawnPointIndices[randomAvailableIndexInList];
+
+        availableSpawnPointIndices.RemoveAt(randomAvailableIndexInList);
+
+        Transform selectedSpawnPoint = spawnPoints[selectedSpawnPointOriginalIndex];
+
         GameObject newEnemy = Instantiate(enemyPrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
+
+        enemySpawnPointMap.Add(newEnemy, selectedSpawnPointOriginalIndex);
 
         EnemyHealth enemyHealth = newEnemy.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
@@ -133,33 +205,41 @@ public class EnemySpawner : MonoBehaviour
             Debug.LogWarning("El prefab del enemigo no tiene el script EnemyHealth, no se podrá detectar su muerte.", newEnemy);
         }
 
-        // --- ASIGNAR RUTA DE PATRULLA ALEATORIA DESDE LA LISTA ---
         EnemyAI enemyAI = newEnemy.GetComponent<EnemyAI>();
         if (enemyAI != null)
         {
+            // Ajustar el target del enemigo spawneado al jugador
+            if (playerTransform != null)
+            {
+                enemyAI.target = playerTransform;
+            }
+            else
+            {
+                Debug.LogWarning("Player Transform no encontrado para asignar al EnemyAI del nuevo enemigo.", newEnemy);
+            }
+
             if (patrolRoutes.Count > 0)
             {
-                // Seleccionar una ruta de patrulla aleatoria de la lista
                 int randomRouteIndex = Random.Range(0, patrolRoutes.Count);
                 PatrolRouteGroup selectedRouteGroup = patrolRoutes[randomRouteIndex];
 
                 if (selectedRouteGroup.routePoints != null && selectedRouteGroup.routePoints.Length > 0)
                 {
-                    enemyAI.SetPatrolPoints(selectedRouteGroup.routePoints); // Asigna los puntos de la ruta seleccionada
+                    enemyAI.SetPatrolPoints(selectedRouteGroup.routePoints);
                 }
                 else
                 {
                     Debug.LogWarning("La ruta de patrulla seleccionada está vacía para el enemigo generado por " + gameObject.name, this);
-                    enemyAI.SetPatrolPoints(null); // Asegurarse de que no haya una ruta si está vacía
+                    enemyAI.SetPatrolPoints(null);
                 }
             }
             else
             {
                 Debug.LogWarning("No hay rutas de patrulla definidas en el spawner '" + gameObject.name + "'. El enemigo no patrullará.", this);
-                enemyAI.SetPatrolPoints(null); // No hay rutas que asignar
+                enemyAI.SetPatrolPoints(null);
             }
 
-            enemyAI.ResetAIState(); // Asegúrate de resetear el estado de la IA después de asignar
+            enemyAI.ResetAIState();
         }
         else
         {
@@ -174,62 +254,66 @@ public class EnemySpawner : MonoBehaviour
     {
         currentActiveEnemiesCount--;
         Debug.Log("Enemigo de " + gameObject.name + " ha muerto. Enemigos activos restantes: " + currentActiveEnemiesCount + "/" + maxActiveEnemies);
+
+        if (enemySpawnPointMap.ContainsKey(deadEnemy))
+        {
+            int freedSpawnPointIndex = enemySpawnPointMap[deadEnemy];
+            if (!availableSpawnPointIndices.Contains(freedSpawnPointIndex))
+            {
+                availableSpawnPointIndices.Add(freedSpawnPointIndex);
+                Debug.Log($"Spawn Point {freedSpawnPointIndex} liberado.");
+            }
+            enemySpawnPointMap.Remove(deadEnemy);
+        }
     }
 
-    // Dibujo de Gizmos para visualizar el spawner, el radio de respawn y los puntos de spawn
-    void OnDrawGizmos()
+    // --- Gizmos para Depuración ---
+    void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 1f);
+        // Dibuja el radio de activación del spawner
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, activationDistance);
 
-        if (enableProximityRespawn)
+        // ... (El resto de tus Gizmos existentes, como puntos de spawn y rutas de patrulla) ...
+        if (spawnPoints != null)
         {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(transform.position, minDistanceForRespawn);
-        }
-
-        // Dibuja los puntos de aparición
-        if (spawnPoints != null && spawnPoints.Length > 0)
-        {
-            Gizmos.color = Color.green; // Nuevo color para spawn points
-            foreach (Transform point in spawnPoints)
+            Gizmos.color = Color.green;
+            for (int i = 0; i < spawnPoints.Length; i++)
             {
-                if (point != null)
+                if (spawnPoints[i] != null)
                 {
-                    Gizmos.DrawSphere(point.position, 0.7f);
-                    Gizmos.DrawLine(transform.position, point.position);
+                    Gizmos.DrawSphere(spawnPoints[i].position, 0.5f); // Punto de esfera
+                    if (i < spawnPoints.Length - 1)
+                    {
+                        Gizmos.DrawLine(spawnPoints[i].position, spawnPoints[i + 1].position); // Línea al siguiente
+                    }
+                    else if (spawnPoints.Length > 1)
+                    {
+                        Gizmos.DrawLine(spawnPoints[i].position, spawnPoints[0].position); // Línea al primero para cerrar el ciclo
+                    }
                 }
             }
         }
 
-        // Dibuja TODAS las rutas de patrulla definidas en el spawner
+        // Dibuja las rutas de patrulla (opcional, si quieres que se vean en el editor)
         if (patrolRoutes != null && patrolRoutes.Count > 0)
         {
-            // Colores para diferenciar las rutas
-            Color[] routeColors = { Color.yellow, Color.magenta, Color.blue, Color.white, Color.grey };
-
-            for (int i = 0; i < patrolRoutes.Count; i++)
+            Gizmos.color = Color.yellow;
+            foreach (var routeGroup in patrolRoutes)
             {
-                PatrolRouteGroup routeGroup = patrolRoutes[i];
-                if (routeGroup.routePoints != null && routeGroup.routePoints.Length > 0)
+                if (routeGroup.routePoints != null && routeGroup.routePoints.Length > 1)
                 {
-                    Gizmos.color = routeColors[i % routeColors.Length]; // Ciclo de colores
-
-                    for (int j = 0; j < routeGroup.routePoints.Length; j++)
+                    for (int i = 0; i < routeGroup.routePoints.Length - 1; i++)
                     {
-                        if (routeGroup.routePoints[j] != null)
+                        if (routeGroup.routePoints[i] != null && routeGroup.routePoints[i + 1] != null)
                         {
-                            Gizmos.DrawSphere(routeGroup.routePoints[j].position, 0.4f);
-                            // Dibuja una línea al siguiente punto o al inicio si es una ruta cerrada
-                            if (j < routeGroup.routePoints.Length - 1)
-                            {
-                                Gizmos.DrawLine(routeGroup.routePoints[j].position, routeGroup.routePoints[j + 1].position);
-                            }
-                            else if (routeGroup.routePoints.Length > 1) // Cierra la ruta si tiene más de 1 punto
-                            {
-                                Gizmos.DrawLine(routeGroup.routePoints[j].position, routeGroup.routePoints[0].position);
-                            }
+                            Gizmos.DrawLine(routeGroup.routePoints[i].position, routeGroup.routePoints[i + 1].position);
+                            Gizmos.DrawSphere(routeGroup.routePoints[i].position, 0.3f);
                         }
+                    }
+                    if (routeGroup.routePoints[routeGroup.routePoints.Length - 1] != null)
+                    {
+                        Gizmos.DrawSphere(routeGroup.routePoints[routeGroup.routePoints.Length - 1].position, 0.3f);
                     }
                 }
             }
