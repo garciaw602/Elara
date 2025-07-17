@@ -11,6 +11,7 @@ public class GameUIManager : MonoBehaviour
     private bool isPauseMenuOpen = false;
     private bool isMainUIOpen = false;
     public AudioSource audioSource;
+    public bool isCanvasOpen = false;
 
     void Start()
     {
@@ -18,6 +19,11 @@ public class GameUIManager : MonoBehaviour
         {
             audioSource.ignoreListenerPause = true;
         }
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        isCanvasOpen = false;
+        CloseAllUI();
     }
 
     void Update()
@@ -29,8 +35,12 @@ public class GameUIManager : MonoBehaviour
             pauseMenuPanel.SetActive(isPauseMenuOpen);
             mainUIPanel.SetActive(false);
             isMainUIOpen = false;
+            isCanvasOpen = isPauseMenuOpen; 
 
             Time.timeScale = isPauseMenuOpen ? 0f : 1f;
+            Cursor.lockState = isPauseMenuOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isPauseMenuOpen;
+
         }
 
         // Toggle Main UI Panel with I, M, or Tab
@@ -40,8 +50,11 @@ public class GameUIManager : MonoBehaviour
             mainUIPanel.SetActive(isMainUIOpen);
             pauseMenuPanel.SetActive(false);
             isPauseMenuOpen = false;
+            isCanvasOpen = isMainUIOpen;
 
             Time.timeScale = isMainUIOpen ? 0f : 1f;
+            Cursor.lockState = isMainUIOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isMainUIOpen;
         }
     }
 
@@ -60,6 +73,20 @@ public class GameUIManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
         mainUIPanel.SetActive(false);
+        isCanvasOpen = true;
         Time.timeScale = 0f;
+    }
+
+    public void CloseAllUI()
+    {
+        pauseMenuPanel.SetActive(false);
+        mainUIPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        isPauseMenuOpen = false;
+        isMainUIOpen = false;
+        isCanvasOpen = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

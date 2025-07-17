@@ -5,22 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-   // public TextMeshProUGUI ammoText;
-
     public static GameManager Instance { get; private set; }
 
     public int gunAmmo = 10;
-
+    public TextMeshProUGUI ammoText;
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
+
     private void Update()
     {
-       // ammoText.text = gunAmmo.ToString();
-
+        if (ammoText != null)
+            ammoText.text = gunAmmo.ToString();
     }
 
-
+    public void AddAmmo(int amount)
+    {
+        gunAmmo += amount;
+    }
 }
+
+

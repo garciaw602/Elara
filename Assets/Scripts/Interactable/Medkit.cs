@@ -1,40 +1,44 @@
 using UnityEngine;
 
-public class Medkit : MonoBehaviour
+public class Medkit : MonoBehaviour, IInteractable
 {
-    public float healAmount = 25f; // Cantidad de vida que restaura este botiquín
-
+    public float healAmount = 25f;
     public bool destroyOnUse = true;
+    public float destroyDelay = 0.1f;
 
-    //Duración del sonido o efecto visual después de usarlo (antes de destruir el objeto)
-    public float destroyDelay = 0.1f; // Pequeño retraso para efectos/sonidos
+    public string itemName = "Heal";
 
-    // Efectos visuales o sonidos
-    // public GameObject healingEffectPrefab;
-    // public AudioClip healingSound;
+    private bool used = false;
 
-    void OnTriggerEnter(Collider other)
+    public void Interact()
     {
-        if (other.CompareTag("Player"))
-        {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (used) return;
 
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.Heal(healAmount); // Llama a la función Heal del jugador
+                playerHealth.Heal(healAmount);
 
-                // Reproducir sonido o efecto visual
-                // if (healingSound != null) AudioSource.PlayClipAtPoint(healingSound, transform.position);
-                // if (healingEffectPrefab != null) Instantiate(healingEffectPrefab, transform.position, Quaternion.identity);
+                // TODO: Add sound or healing VFX here if you want
+                // AudioSource.PlayClipAtPoint(healingSound, transform.position);
+                // Instantiate(healingEffectPrefab, transform.position, Quaternion.identity);
 
-                // Destruye el botiquín
                 if (destroyOnUse)
                 {
+                    used = true;
                     GetComponent<Renderer>().enabled = false;
                     GetComponent<Collider>().enabled = false;
                     Destroy(gameObject, destroyDelay);
                 }
             }
         }
+    }
+
+    public string GetName()
+    {
+        return itemName;
     }
 }

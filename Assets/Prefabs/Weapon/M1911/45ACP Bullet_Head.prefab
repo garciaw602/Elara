@@ -98,6 +98,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 45ACP Bullet_Head
       objectReference: {fileID: 0}
+    - target: {fileID: 3625037896966406280, guid: 9e0ef2cf9cfc11c46bbe7f28b272f6fb, type: 3}
+      propertyPath: m_TagString
+      value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 8403992145370945202, guid: 9e0ef2cf9cfc11c46bbe7f28b272f6fb, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8535412081993147290, guid: 9e0ef2cf9cfc11c46bbe7f28b272f6fb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -175,3 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61aa89bfdf453e84da3965be04a49dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 10
+  lifeTime: 3
+  impactEffectPrefab: {fileID: 100002, guid: ac1aa04288fad804ba1cd769f4377aaf, type: 3}
+  enemyImpactEffectPrefab: {fileID: 3672626785686510003, guid: 4c1f17412de3c25428cb51473aba1a20, type: 3}
+  enemyImpactParticlesDuration: 0.3
