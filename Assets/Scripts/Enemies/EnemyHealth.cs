@@ -118,14 +118,14 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(ammoBoxPrefab, spawnPosition, Quaternion.identity);
         // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN ---
 
-        //if (mySpawner != null)
-        //{
-        //    mySpawner.EnemyDied(this.gameObject);
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("EnemyHealth: Spawner no asignado para este enemigo. No se notificará su muerte.", this);
-        //}
+        if (mySpawner != null)
+        {
+            mySpawner.EnemyDied(this.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("EnemyHealth: Spawner no asignado para este enemigo. No se notificará su muerte.", this);
+        }
 
         // --- Destruir la barra de vida cuando el enemigo muere ---
         if (healthBarCanvasTransform != null)
