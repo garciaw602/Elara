@@ -385,10 +385,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   zombieVoiceClips:
-  - {fileID: 8300000, guid: 09134210fe9c8204190542087e0f1ad2, type: 3}
-  - {fileID: 8300000, guid: 5977fee8905118f439b4d6c3d337c989, type: 3}
-  - {fileID: 8300000, guid: a32f071c391bd744b879df8bfcb4ec2b, type: 3}
+  - {fileID: 8300000, guid: 4b408c334af9d744e8c4df582d75ca02, type: 3}
   voiceDetectionRadius: 8
+  patrolSpeed: 2
+  chaseSpeed: 4
+  patrolPoints: []
+  patrolPointThreshold: 1
+  waitTimeAtPatrolPoint: 1
 --- !u!114 &768566994100160523
 MonoBehaviour:
   m_ObjectHideFlags: 0
