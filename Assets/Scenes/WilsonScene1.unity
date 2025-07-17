@@ -1385,10 +1385,6 @@ PrefabInstance:
       propertyPath: StaminaBarSlider
       value: 
       objectReference: {fileID: 566729155}
-    - target: {fileID: 6167315679771895790, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
-      propertyPath: enemyLayer.m_Bits
-      value: 2147483648
-      objectReference: {fileID: 0}
     - target: {fileID: 7694613895695066287, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
       propertyPath: m_Name
       value: PlayerWilson
