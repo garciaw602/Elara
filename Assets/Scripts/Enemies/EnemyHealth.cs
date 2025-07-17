@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
 
     public float destroyDelay = 0f; //  Poner un retardo o no (0f = inmediato)
 
-    private EnemySpawner mySpawner;
+    //private EnemySpawner mySpawner;
 
 
 
@@ -77,10 +77,10 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void SetSpawner(EnemySpawner spawner)
-    {
-        mySpawner = spawner;
-    }
+    //public void SetSpawner(EnemySpawner spawner)
+    //{
+    //    mySpawner = spawner;
+    //}
 
     // Este método será llamado por la bala cuando impacte
     public void TakeDamage(float amount)
@@ -118,14 +118,14 @@ public class EnemyHealth : MonoBehaviour
         Instantiate(ammoBoxPrefab, spawnPosition, Quaternion.identity);
         // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN ---
 
-        if (mySpawner != null)
-        {
-            mySpawner.EnemyDied(this.gameObject);
-        }
-        else
-        {
-            Debug.LogWarning("EnemyHealth: Spawner no asignado para este enemigo. No se notificará su muerte.", this);
-        }
+        //if (mySpawner != null)
+        //{
+        //    mySpawner.EnemyDied(this.gameObject);
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("EnemyHealth: Spawner no asignado para este enemigo. No se notificará su muerte.", this);
+        //}
 
         // --- Destruir la barra de vida cuando el enemigo muere ---
         if (healthBarCanvasTransform != null)
