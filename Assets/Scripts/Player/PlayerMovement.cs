@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; // Asegúrate de que esta línea esté presente para usar Slider
 
 /// <summary>
 /// PlayerMovement: Este script gestiona el movimiento del jugador, incluyendo
@@ -19,8 +19,11 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     [Tooltip("Radio de la esfera de detección de suelo.")]
     public float groundDistance = 0.4f;
-    [Tooltip("Capas consideradas como suelo.")]
+    [Tooltip("Capas consideradas como suelo (ej. 'Default', 'Floor').")]
     public LayerMask groundMask;
+
+    [Tooltip("La capa de los GameObjects que son 'Enemigos'. También se considerarán suelo para saltar.")]
+    public LayerMask enemyLayer; // <-- ¡NUEVA VARIABLE!
 
     [Header("Configuración de Estamina")]
     [Tooltip("Estamina máxima del jugador.")]
@@ -35,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegenDelay = 1.0f;
     [Tooltip("Estamina mínima requerida para poder iniciar o mantener el esprint.")]
     public float minStaminaToSprint = 10f;
+    [Tooltip("Slider de la UI que muestra la estamina del jugador. Asigna uno si tienes UI de estamina.")]
     public Slider StaminaBarSlider; // Referencia al Slider dentro del Canvas instanciado
 
 
@@ -49,8 +53,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canSprint = true;          // Controla si el jugador tiene suficiente estamina para esprintar
     private float regenDelayTimer;          // Temporizador para el retraso de regeneración de estamina
-
-
 
     /// <summary>
     /// Start se llama antes de la primera actualización del frame.
@@ -70,13 +72,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Inicializar wasGrounded una vez al inicio
-        wasGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        // ¡AHORA COMBINAMOS AMBAS CAPAS PARA LA DETECCIÓN DE SUELO!
+        wasGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask | enemyLayer);
 
         // Inicializar Estamina
         currentStamina = maxStamina;
         regenDelayTimer = staminaRegenDelay;
-        StaminaBarSlider.value = currentStamina;
-
+        // Asegurarse de que el Slider esté conectado y con el valor inicial
+        if (StaminaBarSlider != null)
+        {
+            StaminaBarSlider.maxValue = maxStamina;
+            StaminaBarSlider.value = currentStamina;
+        }
     }
 
     /// <summary>
@@ -87,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // --- Detección de Suelo y Lógica de Aterrizaje ---
         // Obtener el estado actual del suelo
-        bool currentIsGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        // ¡AHORA COMBINAMOS AMBAS CAPAS PARA LA DETECCIÓN DE SUELO!
+        bool currentIsGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask | enemyLayer);
 
         // Si el jugador no estaba en el suelo pero ahora lo está, significa que acaba de aterrizar
         if (!wasGrounded && currentIsGrounded)
@@ -143,7 +151,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Asegurar que la estamina no exceda los límites
         currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-        StaminaBarSlider.value = currentStamina;
+        // Actualizar Slider de Estamina si está asignado
+        if (StaminaBarSlider != null)
+        {
+            StaminaBarSlider.value = currentStamina;
+        }
 
         // Si la estamina es muy baja, no permitir esprintar aunque se mantenga Shift
         if (currentStamina < minStaminaToSprint)
