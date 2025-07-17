@@ -4,34 +4,45 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;
-    public float detectionRadius = 10f; // Distancia para detectar al jugador (para la IA de persecuci�n)
-    public float fieldOfViewAngle = 90f; // �ngulo de visi�n del enemigo
-    public LayerMask visionObstacleMask; // Capa de obst�culos que bloquean la visi�n 
+    public float detectionRadius = 10f;
+    public float fieldOfViewAngle = 90f;
+    public LayerMask visionObstacleMask;
 
-    // --- Configuraci�n de Audio de Voz del Zombie ---
+    // Audio
     [Header("Zombie Voice Settings")]
-    [Tooltip("Los clips de audio para la voz del zombie (gemidos, gru�idos, etc.). Se elegir� uno aleatoriamente para reproducir en loop.")]
-    public AudioClip[] zombieVoiceClips; // Array de clips de voz
+    [Tooltip("Los clips de audio para la voz del zombie (gemidos, gruñidos, etc.). Se elegirá uno aleatoriamente para reproducir en loop.")]
+    public AudioClip[] zombieVoiceClips;
     [Tooltip("El radio dentro del cual el jugador puede escuchar la voz del zombie y activar/detener el loop.")]
-    public float voiceDetectionRadius = 8f; // Distancia para activar el sonido de voz
+    public float voiceDetectionRadius = 8f;
+
+    private AudioSource audioSource;
+    private bool playerInVoiceZone = false;
+
+    // Patrullaje
+    public float patrolSpeed = 2f;
+    public float chaseSpeed = 4f;
+    public Transform[] patrolPoints;
+    public float patrolPointThreshold = 1f;
+    public float waitTimeAtPatrolPoint = 1f;
 
     private NavMeshAgent agent;
     private bool playerDetectedByDistance = false;
     private bool playerDetectedByVision = false;
 
-    private AudioSource audioSource;
-
-    // Bandera para detectar la entrada/salida de la zona de voz (para iniciar/detener el loop)
-    private bool playerInVoiceZone = false;
+    private int currentPatrolPointIndex = 0;
+    private bool isWaitingAtPatrolPoint = false;
+    private float waitTimer = 0f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
-            Debug.LogError("NavMeshAgent no encontrado en el enemigo. Aseg�rate de a�adirlo.", this);
+            Debug.LogError("NavMeshAgent no encontrado en el enemigo.", this);
             enabled = false;
+            return;
         }
+
         if (target == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -41,44 +52,36 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No se asign� un objetivo (jugador) al script EnemyAI2 y no se encontr� un GameObject con la etiqueta 'Player'.", this);
-                enabled = false;
+                Debug.LogWarning("No se encontró un GameObject con la etiqueta 'Player'.", this);
             }
+        }
+
+        if (patrolPoints != null && patrolPoints.Length > 0)
+        {
+            agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+            agent.speed = patrolSpeed;
         }
 
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
-            Debug.LogError("EnemyAI2 requiere un componente AudioSource en el mismo GameObject para la voz del zombie.", this);
+            Debug.LogError("EnemyAI requiere un componente AudioSource.", this);
             enabled = false;
             return;
         }
-
-        // �IMPORTANTE! Aunque tengas Loop marcado en el Inspector, si quieres asegurarte
-        // de que el loop se activa por c�digo, puedes a�adir esta l�nea.
-        // Pero lo m�s importante es no usar PlayOneShot.
-        audioSource.loop = true; // Aseg�rate de que el AudioSource est� configurado para loop
+        audioSource.loop = true;
         audioSource.playOnAwake = false;
-        // audioSource.spatialBlend = 1f; // Aseg�rate de que los sonidos sean 3D
     }
 
     void Update()
     {
-        if (target == null || !agent.enabled)
-        {
-            if (playerInVoiceZone)
-            {
-                audioSource.Stop();
-                playerInVoiceZone = false;
-            }
-            return;
-        }
+        if (!agent.enabled || (target == null && (patrolPoints == null || patrolPoints.Length == 0))) return;
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        float distanceToTarget = target != null ? Vector3.Distance(transform.position, target.position) : Mathf.Infinity;
         playerDetectedByDistance = (distanceToTarget <= detectionRadius);
-
         playerDetectedByVision = false;
-        if (distanceToTarget <= detectionRadius)
+
+        if (target != null && playerDetectedByDistance)
         {
             Vector3 directionToTarget = (target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, directionToTarget) < fieldOfViewAngle / 2)
@@ -94,53 +97,123 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        // --- L�gica para la Voz del Zombie en Loop al Entrar en Zona ---
+        HandleAudio(distanceToTarget);
+
+        if (playerDetectedByVision || (playerDetectedByDistance && target != null))
+        {
+            agent.speed = chaseSpeed;
+            agent.SetDestination(target.position);
+            LookAtTarget();
+            isWaitingAtPatrolPoint = false;
+        }
+        else
+        {
+            agent.speed = patrolSpeed;
+
+            if (patrolPoints != null && patrolPoints.Length > 0)
+            {
+                Patrol();
+            }
+            else
+            {
+                if (agent.hasPath)
+                {
+                    agent.ResetPath();
+                }
+            }
+        }
+    }
+
+    void HandleAudio(float distanceToTarget)
+    {
         if (audioSource != null && zombieVoiceClips != null && zombieVoiceClips.Length > 0)
         {
-            if (distanceToTarget <= voiceDetectionRadius) // Si el jugador est� dentro de la zona de voz
+            if (distanceToTarget <= voiceDetectionRadius)
             {
-                // Si el jugador acaba de entrar en la zona de voz (transici�n de fuera a dentro)
                 if (!playerInVoiceZone)
                 {
-                    // Seleccionar un clip aleatorio del array
                     int randomIndex = Random.Range(0, zombieVoiceClips.Length);
                     AudioClip clipToPlay = zombieVoiceClips[randomIndex];
 
                     if (clipToPlay != null)
                     {
-                        audioSource.Stop();       // Detener cualquier sonido anterior que est� sonando
-                        audioSource.clip = clipToPlay; // <--- CAMBIO CLAVE: Asignar el clip al AudioSource
-                        audioSource.loop = true;  // <--- ASEGURARSE DE QUE EST� EN LOOP (si no est� ya en el Inspector)
-                        audioSource.Play();       // <--- CAMBIO CLAVE: Iniciar la reproducci�n en loop
+                        audioSource.Stop();
+                        audioSource.clip = clipToPlay;
+                        audioSource.loop = true;
+                        audioSource.Play();
                     }
-                    playerInVoiceZone = true; // Marcar que el jugador est� ahora en la zona de voz
+                    playerInVoiceZone = true;
                 }
-                // Si el jugador ya est� en la zona, el sonido sigue en loop, no se hace nada m�s aqu�.
             }
-            else // Si el jugador est� fuera de la zona de voz
+            else
             {
-                // Si el jugador acaba de salir de la zona de voz (transici�n de dentro a fuera)
                 if (playerInVoiceZone)
                 {
-                    audioSource.Stop();       // Detener el sonido en loop
-                    audioSource.loop = false; // <--- Opcional: Desactivar el loop expl�citamente al salir
-                    playerInVoiceZone = false; // Marcar que el jugador ya no est� en la zona de voz
+                    audioSource.Stop();
+                    audioSource.loop = false;
+                    playerInVoiceZone = false;
                 }
             }
         }
-        // --- FIN L�GICA DE VOZ ---
+    }
 
-        // L�gica de movimiento de la IA
-        if (playerDetectedByVision || playerDetectedByDistance)
+    void Patrol()
+    {
+        if (isWaitingAtPatrolPoint)
         {
-            agent.SetDestination(target.position);
-            LookAtTarget();
+            waitTimer -= Time.deltaTime;
+            if (waitTimer <= 0)
+            {
+                isWaitingAtPatrolPoint = false;
+                GoToNextPatrolPoint();
+            }
         }
         else
         {
-            if (agent.hasPath)
+            if (agent.remainingDistance < patrolPointThreshold && !agent.pathPending)
             {
-                agent.ResetPath(); // Detiene el movimiento si no se detecta al jugador
+                isWaitingAtPatrolPoint = true;
+                waitTimer = waitTimeAtPatrolPoint;
+            }
+            else if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+            }
+        }
+    }
+
+    void GoToNextPatrolPoint()
+    {
+        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
+        agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+    }
+
+    public void SetPatrolPoints(Transform[] newPatrolPoints)
+    {
+        if (newPatrolPoints != null && newPatrolPoints.Length > 0)
+        {
+            patrolPoints = newPatrolPoints;
+            currentPatrolPointIndex = 0;
+        }
+        else
+        {
+            patrolPoints = null;
+            Debug.LogWarning("EnemyAI: No se proporcionaron puntos de patrulla válidos.");
+        }
+    }
+
+    public void ResetAIState()
+    {
+        currentPatrolPointIndex = 0;
+        isWaitingAtPatrolPoint = false;
+        waitTimer = 0f;
+        if (agent != null)
+        {
+            agent.ResetPath();
+            agent.speed = patrolSpeed;
+            if (patrolPoints != null && patrolPoints.Length > 0)
+            {
+                agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
             }
         }
     }
@@ -149,30 +222,54 @@ public class EnemyAI : MonoBehaviour
     {
         Vector3 lookPos = target.position - transform.position;
         lookPos.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * agent.angularSpeed);
+        if (lookPos != Vector3.zero)
+        {
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * agent.angularSpeed);
+        }
     }
 
-    // Dibujo de Gizmos para depuraci�n en el Editor de Unity
     void OnDrawGizmosSelected()
     {
         if (target != null)
         {
-            // Radio de detecci�n de la IA (amarillo)
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, detectionRadius);
 
-            // Campo de visi�n de la IA (azul)
             Gizmos.color = Color.blue;
             Vector3 fovLine1 = Quaternion.AngleAxis(fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
             Vector3 fovLine2 = Quaternion.AngleAxis(-fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
             Gizmos.DrawRay(transform.position, fovLine1);
             Gizmos.DrawRay(transform.position, fovLine2);
-            Gizmos.DrawWireSphere(transform.position + transform.forward * detectionRadius, 0.5f);
 
-            // Radio de detecci�n de voz (magenta)
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, voiceDetectionRadius);
+
+            if (playerDetectedByVision)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position + Vector3.up * 0.5f, target.position + Vector3.up * 0.5f);
+            }
+        }
+
+        if (patrolPoints != null)
+        {
+            Gizmos.color = Color.green;
+            for (int i = 0; i < patrolPoints.Length; i++)
+            {
+                if (patrolPoints[i] != null)
+                {
+                    Gizmos.DrawSphere(patrolPoints[i].position, 0.5f);
+                    if (i < patrolPoints.Length - 1)
+                    {
+                        Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[i + 1].position);
+                    }
+                    else if (patrolPoints.Length > 1)
+                    {
+                        Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[0].position);
+                    }
+                }
+            }
         }
     }
 }
