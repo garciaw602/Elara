@@ -1,45 +1,39 @@
-using UnityEngine;
-using UnityEngine.AI; 
+ï»¿using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI_2 : MonoBehaviour
 {
-    public Transform target; 
-    public float detectionRadius = 10f; // Distancia para detectar al jugador
-    public float fieldOfViewAngle = 90f; // Ángulo de visión del enemigo
-    public LayerMask visionObstacleMask; // Capa de obstáculos que bloquean la visión 
+    public Transform target;
+    public float detectionRadius = 10f; // Distancia para detectar al jugador (para la IA de persecuciï¿½n)
+    public float fieldOfViewAngle = 90f; // ï¿½ngulo de visiï¿½n del enemigo
+    public LayerMask visionObstacleMask; // Capa de obstï¿½culos que bloquean la visiï¿½n 
 
-    
-    //Velocidad del enemigo cuando está patrullando
-    public float patrolSpeed = 2f;
-    //Velocidad del enemigo cuando persigue al jugador
-    public float chaseSpeed = 4f;
-
-    //Puntos a los que el enemigo se moverá durante la patrulla
-    public Transform[] patrolPoints;
-    //Distancia mínima al punto de patrulla para considerarlo alcanzado
-    public float patrolPointThreshold = 1f;
-    //Tiempo de espera en cada punto de patrulla antes de ir al siguiente
-    public float waitTimeAtPatrolPoint = 1f;
+    // --- Configuraciï¿½n de Audio de Voz del Zombie ---
+    [Header("Zombie Voice Settings")]
+    [Tooltip("Los clips de audio para la voz del zombie (gemidos, gruï¿½idos, etc.). Se elegirï¿½ uno aleatoriamente para reproducir en loop.")]
+    public AudioClip[] zombieVoiceClips; // Array de clips de voz
+    [Tooltip("El radio dentro del cual el jugador puede escuchar la voz del zombie y activar/detener el loop.")]
+    public float voiceDetectionRadius = 8f; // Distancia para activar el sonido de voz
 
     private NavMeshAgent agent;
     private bool playerDetectedByDistance = false;
     private bool playerDetectedByVision = false;
 
-    private int currentPatrolPointIndex = 0;
-    private bool isWaitingAtPatrolPoint = false;
-    private float waitTimer = 0f;
+    private AudioSource audioSource;
+
+    // Bandera para detectar la entrada/salida de la zona de voz (para iniciar/detener el loop)
+    private bool playerInVoiceZone = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
-            Debug.LogError("NavMeshAgent no encontrado en el enemigo. Asegúrate de añadirlo.");
-            enabled = false; 
+            Debug.LogError("NavMeshAgent no encontrado en el enemigo. Asegï¿½rate de aï¿½adirlo.", this);
+            enabled = false;
         }
         if (target == null)
         {
-            
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null)
             {
@@ -47,171 +41,138 @@ public class EnemyAI_2 : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No se asignó un objetivo (jugador) al script EnemyAI y no se encontró un GameObject con la etiqueta 'Player'.");
-                //enabled = false;
+                Debug.LogWarning("No se asignï¿½ un objetivo (jugador) al script EnemyAI2 y no se encontrï¿½ un GameObject con la etiqueta 'Player'.", this);
+                enabled = false;
             }
         }
 
-        // Inicializar el primer punto de patrulla si hay puntos definidos
-        if (patrolPoints != null && patrolPoints.Length > 0)
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
         {
-            agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
-            agent.speed = patrolSpeed; // Establece la velocidad inicial de patrulla
+            Debug.LogError("EnemyAI2 requiere un componente AudioSource en el mismo GameObject para la voz del zombie.", this);
+            enabled = false;
+            return;
         }
+
+        // ï¿½IMPORTANTE! Aunque tengas Loop marcado en el Inspector, si quieres asegurarte
+        // de que el loop se activa por cï¿½digo, puedes aï¿½adir esta lï¿½nea.
+        // Pero lo mï¿½s importante es no usar PlayOneShot.
+        audioSource.loop = true; // Asegï¿½rate de que el AudioSource estï¿½ configurado para loop
+        audioSource.playOnAwake = false;
+        // audioSource.spatialBlend = 1f; // Asegï¿½rate de que los sonidos sean 3D
     }
 
     void Update()
     {
-        // Si el agente NavMesh no está activo (por ejemplo, si el enemigo está muerto), o si no hay un target asignado
-        // y no hay puntos de patrulla definidos, no hace nada.
-        if (!agent.enabled || (target == null && (patrolPoints == null || patrolPoints.Length == 0))) return;
-
-        // Detección del Jugador
-        playerDetectedByVision = false; // Reinicia en cada frame
-
-        if (target != null) // Solo si hay un jugador a quien detectar
+        if (target == null || !agent.enabled)
         {
-            float distanceToTarget = Vector3.Distance(transform.position, target.position);
-            playerDetectedByDistance = (distanceToTarget <= detectionRadius);
-
-            if (playerDetectedByDistance)
+            if (playerInVoiceZone)
             {
-                Vector3 directionToTarget = (target.position - transform.position).normalized;
-                
-                if (Vector3.Angle(transform.forward, directionToTarget) < fieldOfViewAngle / 2)
-                {
-                    // Comprobar la línea de visión (raycast)
-                    RaycastHit hit;
-                    Vector3 startRay = transform.position + Vector3.up * 0.5f; // Desde los "ojos" del enemigo
-                    Vector3 endRay = target.position + Vector3.up * 0.5f; // Hacia el "centro" del jugador
+                audioSource.Stop();
+                playerInVoiceZone = false;
+            }
+            return;
+        }
 
-                    if (!Physics.Linecast(startRay, endRay, visionObstacleMask))
-                    {
-                        playerDetectedByVision = true;
-                    }
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        playerDetectedByDistance = (distanceToTarget <= detectionRadius);
+
+        playerDetectedByVision = false;
+        if (distanceToTarget <= detectionRadius)
+        {
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, directionToTarget) < fieldOfViewAngle / 2)
+            {
+                RaycastHit hit;
+                Vector3 startRay = transform.position + Vector3.up * 0.5f;
+                Vector3 endRay = target.position + Vector3.up * 0.5f;
+
+                if (!Physics.Linecast(startRay, endRay, visionObstacleMask))
+                {
+                    playerDetectedByVision = true;
                 }
             }
         }
 
-        // --- Comportamiento del Enemigo ---
-        if (playerDetectedByVision)
+        // --- Lï¿½gica para la Voz del Zombie en Loop al Entrar en Zona ---
+        if (audioSource != null && zombieVoiceClips != null && zombieVoiceClips.Length > 0)
         {
-            // El jugador está a la vista, perseguir
-            agent.speed = chaseSpeed;
+            if (distanceToTarget <= voiceDetectionRadius) // Si el jugador estï¿½ dentro de la zona de voz
+            {
+                // Si el jugador acaba de entrar en la zona de voz (transiciï¿½n de fuera a dentro)
+                if (!playerInVoiceZone)
+                {
+                    // Seleccionar un clip aleatorio del array
+                    int randomIndex = Random.Range(0, zombieVoiceClips.Length);
+                    AudioClip clipToPlay = zombieVoiceClips[randomIndex];
+
+                    if (clipToPlay != null)
+                    {
+                        audioSource.Stop();       // Detener cualquier sonido anterior que estï¿½ sonando
+                        audioSource.clip = clipToPlay; // <--- CAMBIO CLAVE: Asignar el clip al AudioSource
+                        audioSource.loop = true;  // <--- ASEGURARSE DE QUE ESTï¿½ EN LOOP (si no estï¿½ ya en el Inspector)
+                        audioSource.Play();       // <--- CAMBIO CLAVE: Iniciar la reproducciï¿½n en loop
+                    }
+                    playerInVoiceZone = true; // Marcar que el jugador estï¿½ ahora en la zona de voz
+                }
+                // Si el jugador ya estï¿½ en la zona, el sonido sigue en loop, no se hace nada mï¿½s aquï¿½.
+            }
+            else // Si el jugador estï¿½ fuera de la zona de voz
+            {
+                // Si el jugador acaba de salir de la zona de voz (transiciï¿½n de dentro a fuera)
+                if (playerInVoiceZone)
+                {
+                    audioSource.Stop();       // Detener el sonido en loop
+                    audioSource.loop = false; // <--- Opcional: Desactivar el loop explï¿½citamente al salir
+                    playerInVoiceZone = false; // Marcar que el jugador ya no estï¿½ en la zona de voz
+                }
+            }
+        }
+        // --- FIN Lï¿½GICA DE VOZ ---
+
+        // Lï¿½gica de movimiento de la IA
+        if (playerDetectedByVision || playerDetectedByDistance)
+        {
             agent.SetDestination(target.position);
             LookAtTarget();
-            isWaitingAtPatrolPoint = false; // Cancela cualquier espera de patrulla
-        }
-        else if (playerDetectedByDistance && target != null) // Si el jugador está cerca pero no a la vista, seguir persiguiendo
-        {
-            agent.speed = chaseSpeed;
-            agent.SetDestination(target.position);
-            isWaitingAtPatrolPoint = false;
-        }
-        else // Si el jugador no está detectado en absoluto, patrullar
-        {
-            agent.speed = patrolSpeed; // Asegura la velocidad de patrulla
-
-            if (patrolPoints != null && patrolPoints.Length > 0)
-            {
-                Patrol();
-            }
-            else
-            {
-                // Si no hay puntos de patrulla y no hay jugador, simplemente detenerse.
-                if (agent.hasPath)
-                {
-                    agent.ResetPath();
-                }
-            }
-        }
-    }
-
-    void Patrol()
-    {
-        if (isWaitingAtPatrolPoint)
-        {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0)
-            {
-                isWaitingAtPatrolPoint = false;
-                GoToNextPatrolPoint();
-            }
         }
         else
         {
-            // Si el enemigo ha llegado al punto de patrulla actual
-            if (agent.remainingDistance < patrolPointThreshold && !agent.pathPending)
+            if (agent.hasPath)
             {
-                isWaitingAtPatrolPoint = true;
-                waitTimer = waitTimeAtPatrolPoint;
-            }
-            // Si no está esperando y no tiene un destino, ve al destino actual
-            else if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f) // O si está atascado
-            {
-                // Que tenga un destino si está patrullando
-                agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+                agent.ResetPath(); // Detiene el movimiento si no se detecta al jugador
             }
         }
-    }
-
-    void GoToNextPatrolPoint()
-    {
-        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length; // Ciclo entre los puntos
-        agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
     }
 
     void LookAtTarget()
     {
         Vector3 lookPos = target.position - transform.position;
-        lookPos.y = 0; // Para que el enemigo no se incline en el eje Y
-        if (lookPos != Vector3.zero) // Evita errores si lookPos es cero
-        {
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * agent.angularSpeed);
-        }
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * agent.angularSpeed);
     }
 
-    // --- Gizmos para Depuración ---
+    // Dibujo de Gizmos para depuraciï¿½n en el Editor de Unity
     void OnDrawGizmosSelected()
     {
-        // Dibuja el radio de detección
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-        // Dibuja el campo de visión
-        Gizmos.color = Color.blue;
-        Vector3 fovLine1 = Quaternion.AngleAxis(fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
-        Vector3 fovLine2 = Quaternion.AngleAxis(-fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
-        Gizmos.DrawRay(transform.position, fovLine1);
-        Gizmos.DrawRay(transform.position, fovLine2);
-
-        // Dibuja la línea de visión al target si está detectado
-        if (target != null && playerDetectedByVision)
+        if (target != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position + Vector3.up * 0.5f, target.position + Vector3.up * 0.5f);
-        }
+            // Radio de detecciï¿½n de la IA (amarillo)
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
 
-        // Dibuja los puntos de patrulla
-        if (patrolPoints != null)
-        {
-            Gizmos.color = Color.green;
-            for (int i = 0; i < patrolPoints.Length; i++)
-            {
-                if (patrolPoints[i] != null)
-                {
-                    Gizmos.DrawSphere(patrolPoints[i].position, 0.5f); // Punto de esfera
-                    if (i < patrolPoints.Length - 1)
-                    {
-                        Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[i + 1].position); // Línea al siguiente
-                    }
-                    else if (patrolPoints.Length > 1)
-                    {
-                        Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[0].position); // Línea al primero para cerrar el ciclo
-                    }
-                }
-            }
+            // Campo de visiï¿½n de la IA (azul)
+            Gizmos.color = Color.blue;
+            Vector3 fovLine1 = Quaternion.AngleAxis(fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
+            Vector3 fovLine2 = Quaternion.AngleAxis(-fieldOfViewAngle / 2, transform.up) * transform.forward * detectionRadius;
+            Gizmos.DrawRay(transform.position, fovLine1);
+            Gizmos.DrawRay(transform.position, fovLine2);
+            Gizmos.DrawWireSphere(transform.position + transform.forward * detectionRadius, 0.5f);
+
+            // Radio de detecciï¿½n de voz (magenta)
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(transform.position, voiceDetectionRadius);
         }
     }
 }

@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
 
     public float destroyDelay = 0f; //  Poner un retardo o no (0f = inmediato)
 
-    //private EnemySpawner mySpawner;
+    private EnemySpawner mySpawner;
 
 
 
@@ -77,10 +77,10 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    //public void SetSpawner(EnemySpawner spawner)
-    //{
-    //    mySpawner = spawner;
-    //}
+    public void SetSpawner(EnemySpawner spawner)
+    {
+        mySpawner = spawner;
+    }
 
     // Este método será llamado por la bala cuando impacte
     public void TakeDamage(float amount)
