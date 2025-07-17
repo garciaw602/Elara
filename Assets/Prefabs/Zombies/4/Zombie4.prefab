@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 1802980835754945311}
   m_Layer: 31
   m_Name: Zombie4
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -672,7 +672,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 6.4844174, y: -0.20421135, z: 2.0724096}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7613390562273211928}
   - {fileID: 8358953921402054677}
@@ -740,11 +740,11 @@ MonoBehaviour:
   visionObstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  patrolSpeed: 2
-  chaseSpeed: 4
-  patrolPoints: []
-  patrolPointThreshold: 1
-  waitTimeAtPatrolPoint: 1
+  zombieVoiceClips:
+  - {fileID: 8300000, guid: 09134210fe9c8204190542087e0f1ad2, type: 3}
+  - {fileID: 8300000, guid: 5977fee8905118f439b4d6c3d337c989, type: 3}
+  - {fileID: 8300000, guid: a32f071c391bd744b879df8bfcb4ec2b, type: 3}
+  voiceDetectionRadius: 8
 --- !u!114 &8967076520013631481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,7 +757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a5bb6e2cc1a984ead03280b8c701d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 40
   damageInterval: 1
 --- !u!114 &88308059554898955
 MonoBehaviour:
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb669cf917e5db440a26d3989c030e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 10
   healthBarUIPrefab: {fileID: 2736670093137886403, guid: 548d44c6d25553847a03eeb51b0dbc58, type: 3}
   healthBarOffset: {x: 0, y: 2, z: 0}
   ammoBoxPrefab: {fileID: 8769572635365532203, guid: bfa77ada8f735a849b525dc6ae66824d, type: 3}
@@ -897,7 +897,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

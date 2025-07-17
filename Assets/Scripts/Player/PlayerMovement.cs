@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// PlayerMovement: Este script gestiona el movimiento del jugador, incluyendo
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegenDelay = 1.0f;
     [Tooltip("Estamina mínima requerida para poder iniciar o mantener el esprint.")]
     public float minStaminaToSprint = 10f;
+    public Slider StaminaBarSlider; // Referencia al Slider dentro del Canvas instanciado
+
 
     // Referencias y Variables Internas
     private Rigidbody rbPlayer;             // Referencia al componente Rigidbody del jugador
@@ -46,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canSprint = true;          // Controla si el jugador tiene suficiente estamina para esprintar
     private float regenDelayTimer;          // Temporizador para el retraso de regeneración de estamina
+
+
 
     /// <summary>
     /// Start se llama antes de la primera actualización del frame.
@@ -70,6 +75,8 @@ public class PlayerMovement : MonoBehaviour
         // Inicializar Estamina
         currentStamina = maxStamina;
         regenDelayTimer = staminaRegenDelay;
+        StaminaBarSlider.value = currentStamina;
+
     }
 
     /// <summary>
@@ -136,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Asegurar que la estamina no exceda los límites
         currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+        StaminaBarSlider.value = currentStamina;
 
         // Si la estamina es muy baja, no permitir esprintar aunque se mantenga Shift
         if (currentStamina < minStaminaToSprint)

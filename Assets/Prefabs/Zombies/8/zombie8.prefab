@@ -14,43 +14,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -56.826683
+      value: -2.62
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.0879245
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.893682
+      value: -1.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071069
+      value: 0.6734642
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.00811683
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.70697975
+      value: -0.73921984
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.010663892
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.206
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -89.987
+      value: -95.33
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 1.522
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8183481454299698827, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_Layer
@@ -155,6 +155,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_Layer
       value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: 046f92a7e5e8250409d4a3002275ac78, type: 3}
       propertyPath: m_Layer
@@ -300,11 +304,11 @@ MonoBehaviour:
   visionObstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  patrolSpeed: 2
-  chaseSpeed: 4
-  patrolPoints: []
-  patrolPointThreshold: 1
-  waitTimeAtPatrolPoint: 1
+  zombieVoiceClips:
+  - {fileID: 8300000, guid: 09134210fe9c8204190542087e0f1ad2, type: 3}
+  - {fileID: 8300000, guid: 5977fee8905118f439b4d6c3d337c989, type: 3}
+  - {fileID: 8300000, guid: a32f071c391bd744b879df8bfcb4ec2b, type: 3}
+  voiceDetectionRadius: 8
 --- !u!114 &6572453621038311017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a5bb6e2cc1a984ead03280b8c701d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 40
   damageInterval: 1
 --- !u!114 &5773909596270020500
 MonoBehaviour:
@@ -331,10 +335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb669cf917e5db440a26d3989c030e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 10
   healthBarUIPrefab: {fileID: 2736670093137886403, guid: 548d44c6d25553847a03eeb51b0dbc58, type: 3}
   healthBarOffset: {x: 0, y: 2, z: 0}
-  ammoBoxPrefab: {fileID: 0}
+  ammoBoxPrefab: {fileID: 8769572635365532203, guid: bfa77ada8f735a849b525dc6ae66824d, type: 3}
   spawnOffsetY: 0.5
   destroyDelay: 0
 --- !u!195 &6477374240565194870
@@ -479,7 +483,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
