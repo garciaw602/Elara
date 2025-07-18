@@ -5537,7 +5537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Level2
-  triggerKey: 273
+  triggerKey: 293
 --- !u!4 &698810579
 Transform:
   m_ObjectHideFlags: 0
