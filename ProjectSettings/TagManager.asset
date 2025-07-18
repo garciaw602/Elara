@@ -9,6 +9,7 @@ TagManager:
   - GunAmmo
   - Bullet
   - 'Interactable '
+  - Lights
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Weapon
   - Player
   - Interactable
-  - 
+  - Light
   - 
   - 
   - 
