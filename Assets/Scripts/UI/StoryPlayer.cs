@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using System.IO;
 
 [System.Serializable]
 public class SubtitleLine
@@ -19,12 +20,12 @@ public class StoryPlayer : MonoBehaviour
     [Header("Video")]
     public VideoPlayer videoPlayer;
     public RawImage rawImage;
-    public VideoClip[] clips;
+    [SerializeField] private List<string> videoFileNames = new List<string>(); // .mp4 file names in StreamingAssets
 
     [Header("Audio")]
     public AudioSource mainMusic;
-    public AudioSource narration;
-
+    public AudioSource narration1;
+    public AudioSource narration2;
     [Header("Subtitles")]
     public TextMeshProUGUI subtitleText;
     public List<SubtitleLine> globalSubtitles = new List<SubtitleLine>();
@@ -43,15 +44,12 @@ public class StoryPlayer : MonoBehaviour
 
     void Update()
     {
-        
-
         if (!videoPlayer.isPlaying)
             return;
 
         double globalTime = totalElapsedTime + videoPlayer.time;
 
         string subtitle = "";
-
         foreach (var line in globalSubtitles)
         {
             if (globalTime >= line.startTime && globalTime <= line.endTime)
@@ -64,44 +62,86 @@ public class StoryPlayer : MonoBehaviour
         subtitleText.text = subtitle;
         subtitleText.enabled = !string.IsNullOrEmpty(subtitle);
 
-        #if UNITY_EDITOR
-                globalTime = totalElapsedTime + videoPlayer.time;
-                Debug.Log($"Global Time: {globalTime:F2} s");
-        #endif
+#if UNITY_EDITOR
+        Debug.Log($"Global Time: {globalTime:F2} s");
+#endif
     }
 
     void PlayClip(int index)
     {
-        if (index < clips.Length)
-        {
-            videoPlayer.clip = clips[index];
-            videoPlayer.Play();
-
-            if (index == 1 && !audioStarted)
-            {
-                audioStarted = true;
-                StartCoroutine(FadeIn(mainMusic, 2f, 0.5f));
-                StartCoroutine(PlayNarrationWithFade());
-            }
-        }
-        else
+        if (index >= videoFileNames.Count)
         {
             SceneManager.LoadScene("Level1");
+            return;
+        }
+
+        string fileName = videoFileNames[index];
+        string videoPath = Path.Combine(Application.streamingAssetsPath, fileName);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // For WebGL, use relative path via UnityWebRequest
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = videoPath;
+#else
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = videoPath;
+#endif
+
+        Debug.Log("Playing video from: " + videoPath);
+        videoPlayer.Prepare();
+        videoPlayer.prepareCompleted += OnPrepared;
+    }
+
+    void OnPrepared(VideoPlayer vp)
+    {
+        vp.prepareCompleted -= OnPrepared;
+        videoPlayer.Play();
+
+        if (currentClipIndex == 1 && !audioStarted)
+        {
+            audioStarted = true;
+            StartCoroutine(FadeIn(mainMusic, 2f, 0.5f));
+            StartCoroutine(PlayNarrationWithFade());
         }
     }
 
     void OnVideoFinished(VideoPlayer vp)
     {
-        totalElapsedTime += vp.clip.length; // ⏱ accumulate full video length
+        totalElapsedTime += vp.length;
         currentClipIndex++;
         PlayClip(currentClipIndex);
     }
 
     IEnumerator PlayNarrationWithFade()
     {
-        float delayBeforeNarration = 2.2f;
-        yield return new WaitForSeconds(delayBeforeNarration);
+        bool startedNarration1 = false;
+        bool startedNarration2 = false;
 
+        float narration1StartTime = 12f;
+        float narration2StartTime = 68f;
+
+        while (!startedNarration1 || !startedNarration2)
+        {
+            double globalTime = totalElapsedTime + videoPlayer.time;
+
+            if (!startedNarration1 && globalTime >= narration1StartTime)
+            {
+                startedNarration1 = true;
+                StartCoroutine(PlayAndFadeNarration(narration1));
+            }
+
+            if (!startedNarration2 && globalTime >= narration2StartTime)
+            {
+                startedNarration2 = true;
+                StartCoroutine(PlayAndFadeNarration(narration2));
+            }
+
+            yield return null;
+        }
+    }
+
+    IEnumerator PlayAndFadeNarration(AudioSource narration)
+    {
         narration.volume = 0;
         narration.Play();
         yield return StartCoroutine(FadeIn(narration, 2f, 1f));
@@ -145,12 +185,19 @@ public class StoryPlayer : MonoBehaviour
     {
         globalSubtitles = new List<SubtitleLine>
         {
-            new SubtitleLine { startTime = 12f, endTime = 18f, text = "In the year 2038, Elena led a secret biotech project ELARA." },
-            new SubtitleLine { startTime = 19f, endTime = 25f, text = "The goal: rewrite human DNA with Artificial intelligence… and erase terminal illness." },
-            new SubtitleLine { startTime = 26f, endTime = 35f, text = "But the experiment failed. The virus, ELARA-X, learned... mutated... and awakened memories in the dead." },
-            new SubtitleLine { startTime = 36f, endTime = 44f, text = "Now, the undead walk, but they remember. They cry… whisper names… search for their homes." },
-            new SubtitleLine { startTime = 45f, endTime = 49f, text = "Some even avoid hurting the ones they loved." },
-            new SubtitleLine { startTime = 50f, endTime = 59f, text = "The line between life and death… human and monster… is gone." }
+            new SubtitleLine { startTime = 14f, endTime = 22f, text = "In the year 2038, Elena led a secret biotech project ELARA." },
+            new SubtitleLine { startTime = 23f, endTime = 30f, text = "The goal: rewrite human DNA with Artificial intelligence… and erase terminal illness." },
+            new SubtitleLine { startTime = 31f, endTime = 42f, text = "But the experiment failed. The virus, ELARA-X, learned... mutated... and awakened memories in the dead." },
+            new SubtitleLine { startTime = 43f, endTime = 53f, text = "Now, the undead walk, but they remember. They cry… whisper names… search for their homes." },
+            new SubtitleLine { startTime = 54f, endTime = 57f, text = "Some even avoid hurting the ones they loved." },
+            new SubtitleLine { startTime = 58f, endTime = 64f, text = "The line between life and death… human and monster… is gone." },
+            new SubtitleLine { startTime = 71f, endTime = 77f, text = "My name is Gabriel. I was happy... before all this" },
+            new SubtitleLine { startTime = 78f, endTime = 90f, text = "Ex-military, now just a mechanic. I had everything I needed Elena, my wife... Luna, our daughter. My world." },
+            new SubtitleLine { startTime = 91f, endTime = 99f, text = "I was outside the city that day… fixing an old antenna. Just another job" },
+            new SubtitleLine { startTime = 100f, endTime = 114f, text = "Then… it happened. They call it the Awakening. When I returned home, everything was gone. I found blood… and a note from my wife." },
+            new SubtitleLine { startTime = 115f, endTime = 127f, text = "Don’t trust anyone. Don’t try to save me. Save the world if you can… or Luna, if you still have a soul." },
+            new SubtitleLine { startTime = 128f, endTime = 131f, text = "I lost them… but I won't lose my soul" },
+            new SubtitleLine { startTime = 131f, endTime = 136f, text = "If Luna’s still out there… I’ll find her" }
         };
     }
 }
