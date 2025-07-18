@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Player Control References")]
     [Tooltip("Asigna aquí el script que controla el disparo del jugador (ej. Gun.cs).")]
-    public MonoBehaviour playerShootingScript; // <-- ¡Este es el campo donde arrastras tu script Gun.cs!
+    public MonoBehaviour playerShootingScript; // Gun.cs!
 
 
 
@@ -145,21 +145,7 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogWarning("PlayerHealth: No se ha asignado 'Player Shooting Script' en el Inspector. Asegúrate de hacerlo.", this);
         }
 
-        // Aquí podrías añadir otros scripts de control si los asignaste:
-        // if (playerMovementScript != null) { playerMovementScript.enabled = enable; }
-        // if (playerCameraLookScript != null) { playerCameraLookScript.enabled = enable; }
 
-        // Si tienes otros scripts en el GameObject del jugador que quieres desactivar automáticamente,
-        // puedes mantener un bucle general, pero es más específico con referencias directas.
-        // MonoBehaviour[] playerScriptsOnGameObject = GetComponents<MonoBehaviour>();
-        // foreach (MonoBehaviour script in playerScriptsOnGameObject)
-        // {
-        //     // Evita desactivar este script (PlayerHealth) o scripts UI si están en el mismo GameObject
-        //     if (script != this && !(script is UnityEngine.UI.Graphic) && !(script is CanvasRenderer)) 
-        //     {
-        //         script.enabled = enable;
-        //     }
-        // }
     }
 
     /// <summary>
