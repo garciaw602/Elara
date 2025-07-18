@@ -18,10 +18,16 @@ public class Bullet : MonoBehaviour
     public GameObject impactEffectPrefab; // Prefab de efecto de impacto (ej. chispas, explosión)
 
     [Tooltip("Prefab del sistema de partículas específico para cuando la bala impacta a un enemigo.")]
-    public GameObject enemyImpactEffectPrefab; // <-- ¡NUEVO! Partícula para impacto en enemigo
+    public GameObject enemyImpactEffectPrefab; // Partícula para impacto en enemigo
 
     [Tooltip("La duración en segundos que las partículas de impacto en el enemigo permanecerán visibles.")]
-    public float enemyImpactParticlesDuration = 1.5f; // <-- ¡NUEVO! Duración de las partículas de impacto en enemigo
+    public float enemyImpactParticlesDuration = 1.5f; // Duración de las partículas de impacto en enemigo
+
+
+    // --- NUEVO ---
+    [Tooltip("La duración en segundos que las partículas de impacto genérico permanecerán visibles.")]
+    public float genericImpactParticlesDuration = 1.0f; // Duración para las partículas de impacto genérico
+
 
     /// <summary>
     /// Start se llama antes de la primera actualización del frame.
@@ -34,10 +40,10 @@ public class Bullet : MonoBehaviour
     }
 
     /// <summary>
-    /// OnCollisionEnter se llama cuando este collider/rigidbody ha comenzado a tocar otro rigidbody/collider.
-    /// Maneja el daño y los efectos de impacto.
+    /// OnCollisionEnter se llama cuando este collider/rigidbody ha comenzado a tocar otro
+    /// collider/rigidbody.
     /// </summary>
-    /// <param name="collision">Los datos de colisión asociados con este evento.</param>
+    /// <param name="collision">La información de la colisión.</param>
     void OnCollisionEnter(Collision collision)
     {
         bool hitEnemy = false; // Bandera para saber si impactamos a un enemigo
@@ -57,12 +63,15 @@ public class Bullet : MonoBehaviour
         if (hitEnemy && enemyImpactEffectPrefab != null)
         {
             GameObject enemyFX = Instantiate(enemyImpactEffectPrefab, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
-            Destroy(enemyFX, enemyImpactParticlesDuration); // Destruye las partículas del enemigo después de su duración
+            // ---  Destruir las partículas después de su duración ---
+            Destroy(enemyFX, enemyImpactParticlesDuration);
         }
         // De lo contrario, si no es un enemigo o no tenemos un efecto específico para enemigo, usamos el efecto genérico.
         else if (impactEffectPrefab != null)
         {
-            Instantiate(impactEffectPrefab, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+            GameObject genericFX = Instantiate(impactEffectPrefab, transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
+            // --- Destruir las partículas después de su duración ---
+            Destroy(genericFX, genericImpactParticlesDuration);
         }
 
         // Destruye la bala después de impactar

@@ -302,8 +302,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6388523459367692650, guid: c2336cf9769605142a07d8fc72a24e49, type: 3}
+      propertyPath: respawnTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388523459367692650, guid: c2336cf9769605142a07d8fc72a24e49, type: 3}
       propertyPath: activationDistance
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388523459367692650, guid: c2336cf9769605142a07d8fc72a24e49, type: 3}
+      propertyPath: deactivationDistance
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8914146869770287643, guid: c2336cf9769605142a07d8fc72a24e49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -550,6 +558,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.639635, z: 2.1355438}
   m_Center: {x: 0, y: 0.2879756, z: -0.012645721}
+--- !u!114 &792289262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6581739689393078319, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
+  m_PrefabInstance: {fileID: 6274544134686209927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &813231317
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,14 +899,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3527556390106834949, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
+      propertyPath: gameOverPanel
+      value: 
+      objectReference: {fileID: 3004023637206202021}
+    - target: {fileID: 3527556390106834949, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
+      propertyPath: healthBarSlider
+      value: 
+      objectReference: {fileID: 2580108181524846194}
     - target: {fileID: 4886772243983362885, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 2147486071
       objectReference: {fileID: 0}
     - target: {fileID: 6167315679771895790, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167315679771895790, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
       propertyPath: groundDistance
       value: 1.3
       objectReference: {fileID: 0}
+    - target: {fileID: 6167315679771895790, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
+      propertyPath: StaminaBarSlider
+      value: 
+      objectReference: {fileID: 792289262}
     - target: {fileID: 7694613895695066287, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
       propertyPath: m_Name
       value: PlayerWilson
@@ -2517,6 +2552,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363335520789743273, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471642756832228970, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
