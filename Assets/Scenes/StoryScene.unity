@@ -157,8 +157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Create a warm, cinematic scene showing Gabriel\u2019s peaceful life before
-    the outbreak. He is an ex-military, now a humble mechanic"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a501af593257e86438da0070ee08e904, type: 2}
   m_sharedMaterial: {fileID: 8565250297916627079, guid: a501af593257e86438da0070ee08e904, type: 2}
@@ -298,9 +297,9 @@ MonoBehaviour:
   - Story8.mp4
   - Story11.mp4
   - Story7.mp4
-  - Story12.mp4
   - Story13.mp4
   - Story10.mp4
+  - Story12.mp4
   - Story9.mp4
   mainMusic: {fileID: 2095129375}
   narration1: {fileID: 1289092533}
@@ -428,8 +427,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4627311b116dd6247894393b52b21902, type: 3}
-  m_Resource: {fileID: 8300000, guid: 4627311b116dd6247894393b52b21902, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9bd1b614c4f2f5441bfa587365a14ae5, type: 3}
+  m_Resource: {fileID: 8300000, guid: 9bd1b614c4f2f5441bfa587365a14ae5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -437,7 +436,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 25
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1309,8 +1308,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a2a63f00ab240aa40a9d6f0586578a6d, type: 3}
-  m_Resource: {fileID: 8300000, guid: a2a63f00ab240aa40a9d6f0586578a6d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4bdac090fb3e4744292e2457c5fcfffd, type: 3}
+  m_Resource: {fileID: 8300000, guid: 4bdac090fb3e4744292e2457c5fcfffd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1318,7 +1317,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 11
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
