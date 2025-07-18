@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI References")]
     [Tooltip("Referencia al TextMeshProUGUI para mostrar la munición.")]
-    public TextMeshProUGUI ammoText;
+    private TextMeshProUGUI ammoText;
 
     private void Awake()
     {
@@ -32,10 +32,16 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // ¡Importante para la persistencia!
 
+
+        SceneManager.sceneLoaded += OnSceneLoaded; // Detect scene changes
+
+
         // --- NUEVO: Guardar los valores iniciales al primer Awake ---
         // Esto se ejecutará solo una vez al inicio del juego.
         initialPlayerHealth = playerHealth;
         initialGunAmmo = gunAmmo;
+        GameObject foundObject = GameObject.Find("AmmoTxt"); // Use the exact name from the Hierarchy
+        ammoText = foundObject.GetComponent<TextMeshProUGUI>();
 
         Debug.Log("GameManager Singleton listo y persistirá entre escenas.");
     }
@@ -44,6 +50,20 @@ public class GameManager : MonoBehaviour
     {
         if (ammoText != null)
             ammoText.text = gunAmmo.ToString();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject foundObject = GameObject.Find("AmmoTxt");
+        if (foundObject != null)
+        {
+            ammoText = foundObject.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            ammoText = null;
+            Debug.LogWarning("AmmoTxt no encontrado en la nueva escena.");
+        }
     }
 
     public void AddAmmo(int amount)
