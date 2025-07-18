@@ -3423,7 +3423,7 @@ GameObject:
   - component: {fileID: 539049494}
   m_Layer: 0
   m_Name: 'Point Lighting '
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12656,7 +12656,7 @@ GameObject:
   - component: {fileID: 1738150354}
   m_Layer: 0
   m_Name: 'Lamp Lighting '
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15480,7 +15480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2037540034
 Transform:
   m_ObjectHideFlags: 0
@@ -16722,6 +16722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Snow FX_Def2
       objectReference: {fileID: 0}
+    - target: {fileID: 3717871160214936096, guid: 2fff3fb4250f1144cad3f76bbde36f23, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
     - target: {fileID: 8796419111931635198, guid: 2fff3fb4250f1144cad3f76bbde36f23, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.7485123
@@ -16803,6 +16807,10 @@ PrefabInstance:
     - target: {fileID: 6127950240901004204, guid: 0b6ade2e5a8da00418ae0e8cc3b0d747, type: 3}
       propertyPath: m_Name
       value: Snow FX_Def1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6127950240901004204, guid: 0b6ade2e5a8da00418ae0e8cc3b0d747, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     - target: {fileID: 9166679845344950874, guid: 0b6ade2e5a8da00418ae0e8cc3b0d747, type: 3}
       propertyPath: m_LocalPosition.x

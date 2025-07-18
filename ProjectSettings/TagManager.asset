@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - 'Interactable '
   - Lights
+  - Snow
   layers:
   - Default
   - TransparentFX
