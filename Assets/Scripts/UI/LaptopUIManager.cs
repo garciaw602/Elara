@@ -1,24 +1,29 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class LaptopUIManager : MonoBehaviour
 {
     public GameObject panel;
 
-    public void OnOption1() // Unlock Door
+    public void OnOption1() 
     {
         Debug.Log("Option 1: Unlocking Door...");
-        // Example: Find door and open it
+        SceneManager.LoadScene("MainMenu");
+
     }
 
-    public void OnOption2() // Give Ammo
+    public void OnOption2() 
     {
         Debug.Log("Option 2: Giving ammo...");
-        GameManager.Instance.AddAmmo(30);
+
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void OnOption3() // Play video or trigger scene
+    public void OnOption3() 
     {
         Debug.Log("Option 3: Playing video...");
+
+        SceneManager.LoadScene("MainMenu");
         // Your logic here
     }
 
