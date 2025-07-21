@@ -1295,33 +1295,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2279802070228083372, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_text
-      value: '- Find the PC'
-      objectReference: {fileID: 0}
     - target: {fileID: 4412487154590130837, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845307103745784521, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_fontSize
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 5845307103745784521, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 6265892135246366953, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6718081856484962405, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 281.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6718081856484962405, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -108
       objectReference: {fileID: 0}
     - target: {fileID: 6910472972649300247, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
       propertyPath: m_Name
@@ -1409,10 +1385,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471642756832228970, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8353740398159497869, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
