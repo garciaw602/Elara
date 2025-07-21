@@ -8148,6 +8148,10 @@ PrefabInstance:
       propertyPath: healthBarSlider
       value: 
       objectReference: {fileID: 2580108181524846194}
+    - target: {fileID: 3527556390106834949, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
+      propertyPath: attackIndicatorUI
+      value: 
+      objectReference: {fileID: 1186385107}
     - target: {fileID: 3603370815159040225, guid: fb6b10384b9eabd4a836e17cd06cf434, type: 3}
       propertyPath: Loop
       value: 1
@@ -10408,6 +10412,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183631618}
   m_Mesh: {fileID: 4300056, guid: c6d026d6367d43a438c71a59c9da8290, type: 3}
+--- !u!1 &1186385107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8353740398159497869, guid: b40af73414b880a4f9cf0349eb212142, type: 3}
+  m_PrefabInstance: {fileID: 6274544134686209927}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1189788701 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5774581285304211474, guid: d2420b29e97767a499f1a0fcbc314b3a, type: 3}
