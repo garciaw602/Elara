@@ -291,8 +291,8 @@ MonoBehaviour:
   - Story1.mp4
   - Story2.mp4
   - Story22.mp4
-  - Story3.mp4
   - Story4.mp4
+  - Story3.mp4
   - Story6.mp4
   - Story8.mp4
   - Story11.mp4
@@ -300,6 +300,7 @@ MonoBehaviour:
   - Story13.mp4
   - Story10.mp4
   - Story12.mp4
+  - Story9.mp4
   - Story9.mp4
   mainMusic: {fileID: 2095129375}
   narration1: {fileID: 1289092533}
@@ -427,8 +428,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9bd1b614c4f2f5441bfa587365a14ae5, type: 3}
-  m_Resource: {fileID: 8300000, guid: 9bd1b614c4f2f5441bfa587365a14ae5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c68a73e2d8f69034994800c679eb99b2, type: 3}
+  m_Resource: {fileID: 8300000, guid: c68a73e2d8f69034994800c679eb99b2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1308,8 +1309,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4bdac090fb3e4744292e2457c5fcfffd, type: 3}
-  m_Resource: {fileID: 8300000, guid: 4bdac090fb3e4744292e2457c5fcfffd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b74cf6896b387a047ab8160df011e836, type: 3}
+  m_Resource: {fileID: 8300000, guid: b74cf6896b387a047ab8160df011e836, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

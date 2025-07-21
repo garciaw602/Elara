@@ -200,7 +200,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (rb != null)
         {
-            rb.velocity = Vector3.zero;     // Detener cualquier movimiento lineal
+            rb.linearVelocity = Vector3.zero;     // Detener cualquier movimiento lineal
             rb.angularVelocity = Vector3.zero; // Detener cualquier rotación
             rb.isKinematic = true;          // ¡Congela el Rigidbody en su posición actual!
             rb.useGravity = false;          // Deja de ser afectado por la gravedad

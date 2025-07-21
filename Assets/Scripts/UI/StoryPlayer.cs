@@ -190,14 +190,15 @@ public class StoryPlayer : MonoBehaviour
             new SubtitleLine { startTime = 30f, endTime = 41f, text = "But the experiment failed. The virus, ELARA-X, learned... mutated... and awakened memories in the dead." },
             new SubtitleLine { startTime = 42f, endTime = 53f, text = "Now, the undead walk, but they remember. They cry… whisper names… search for their homes." },
             new SubtitleLine { startTime = 54f, endTime = 57f, text = "Some even avoid hurting the ones they loved." },
-            new SubtitleLine { startTime = 58f, endTime = 64f, text = "The line between life and death… human and monster… is gone." },
-            new SubtitleLine { startTime = 71f, endTime = 77f, text = "My name is Gabriel. I was happy... before all this" },
-            new SubtitleLine { startTime = 78f, endTime = 90f, text = "Ex-military, now just a mechanic. I had everything I needed. Elena, my wife... Luna, our daughter. My world." },
-            new SubtitleLine { startTime = 91f, endTime = 99f, text = "I was outside the city that day… fixing an old antenna. You know... Just another job" },
-            new SubtitleLine { startTime = 100f, endTime = 114f, text = "Then… it happened. They call it the Awakening. When I returned home, everything was gone. I found blood… and a note from my wife." },
-            new SubtitleLine { startTime = 115f, endTime = 127f, text = "Don’t trust anyone. Don’t try to save me. Save the world if you can… or Luna, if you still have a soul." },
-            new SubtitleLine { startTime = 128f, endTime = 131f, text = "I lost them… but I won't lose my soul" },
-            new SubtitleLine { startTime = 131f, endTime = 136f, text = "If Luna’s still out there… I’ll find her" }
+            new SubtitleLine { startTime = 58f, endTime = 63f, text = "The line between life and death… human and monster… is gone. " },
+            new SubtitleLine { startTime = 64f, endTime = 69f, text = "Now the world is detroyed..." },
+            new SubtitleLine { startTime = 70f, endTime = 76f, text = "My name is Gabriel. I was happy... before all this" },
+            new SubtitleLine { startTime = 77f, endTime = 89f, text = "Ex-military, now just a mechanic. I had everything I needed. Elena, my wife... Luna, our daughter. My world." },
+            new SubtitleLine { startTime = 90f, endTime = 98f, text = "I was outside the city that day… You know... fixing an old antenna. Just another job" },
+            new SubtitleLine { startTime = 99f, endTime = 113f, text = "Then… it happened. They call it the Awakening. When I returned home, everything was gone. I found blood… and a note from my wife." },
+            new SubtitleLine { startTime = 114f, endTime = 126f, text = "Don’t trust anyone. Don’t try to save me. Save the world if you can… or Luna, if you still have a soul." },
+            new SubtitleLine { startTime = 127f, endTime = 129f, text = "I lost them… but I won't lose my soul" },
+            new SubtitleLine { startTime = 130f, endTime = 136f, text = "If Luna’s still out there… I’ll find her" }
         };
     }
 }
