@@ -3331,6 +3331,7 @@ MonoBehaviour:
   maxHealth: 100
   healthBarSlider: {fileID: 0}
   gameOverPanel: {fileID: 0}
+  attackIndicatorUI: {fileID: 0}
   playerShootingScript: {fileID: 516205263860637100}
 --- !u!1 &7887450562602398471
 GameObject:

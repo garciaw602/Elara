@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections; // Necesario para Coroutines
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -13,12 +14,15 @@ public class PlayerHealth : MonoBehaviour
     public Slider healthBarSlider;
     [Tooltip("Asigna aquí el panel de Game Over que debe activarse al morir el jugador.")]
     public GameObject gameOverPanel;
+    [Tooltip("Asigna aquí el GameObject de la UI que indica que el jugador está siendo atacado ")]
+    public GameObject attackIndicatorUI; 
 
     [Header("Player Control References")]
     [Tooltip("Asigna aquí el script que controla el disparo del jugador (ej. Gun.cs).")]
-    public MonoBehaviour playerShootingScript; // Gun.cs!
+    public MonoBehaviour playerShootingScript;
 
-
+    // Coroutine para el efecto de ataque UI
+    private Coroutine attackIndicatorCoroutine;
 
     void Start()
     {
@@ -29,13 +33,17 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        // Configura el valor máximo del Slider de vida una sola vez al inicio
+        // Configura el valor máximo del Slider de vida
         if (healthBarSlider != null)
         {
             healthBarSlider.maxValue = maxHealth;
         }
 
-        // Actualiza la UI de vida con el valor actual del GameManager
+        // Inicializa la vida del jugador a la máxima en el GameManager 
+
+        GameManager.Instance.SetPlayerHealth(maxHealth);
+
+        // Actualiza la UI de vida
         UpdateHealthUI();
 
         // Asegura que el panel de Game Over esté inactivo al inicio
@@ -44,8 +52,13 @@ public class PlayerHealth : MonoBehaviour
             gameOverPanel.SetActive(false);
         }
 
-        // Asegura que los controles del jugador (disparo, movimiento, etc.) estén activos al inicio del nivel
-        // Esto es crucial para reiniciar el juego después de una muerte
+        // Asegura que el indicador de ataque UI esté inactivo al inicio
+        if (attackIndicatorUI != null)
+        {
+            attackIndicatorUI.SetActive(false);
+        }
+
+        // Asegura que los controles del jugador estén activos al inicio del nivel
         EnablePlayerControls(true);
     }
 
@@ -57,12 +70,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if (GameManager.Instance == null) return;
 
-        // Reduce la vida en el GameManager y la actualiza (clamping está dentro de SetPlayerHealth)
+        // Reduce la vida en el GameManager
         GameManager.Instance.SetPlayerHealth(GameManager.Instance.playerHealth - amount);
         Debug.Log($"Player ha recibido {amount} de daño. Vida actual: {GameManager.Instance.playerHealth}");
 
         // Actualiza la interfaz de usuario de la vida
         UpdateHealthUI();
+
+        // Mostrar el indicador de ataque UI 
+        ShowAttackIndicator();
 
         // Verifica si el jugador ha muerto
         if (GameManager.Instance.playerHealth <= 0)
@@ -79,7 +95,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (GameManager.Instance == null) return;
 
-        // Aumenta la vida en el GameManager y la actualiza (clamping está dentro de SetPlayerHealth)
+        // Aumenta la vida en el GameManager
         GameManager.Instance.SetPlayerHealth(GameManager.Instance.playerHealth + amount);
         Debug.Log($"Player se ha curado {amount}. Vida actual: {GameManager.Instance.playerHealth}");
 
@@ -94,7 +110,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (healthBarSlider != null && GameManager.Instance != null)
         {
-            // El valor del Slider siempre refleja la vida actual del GameManager
             healthBarSlider.value = GameManager.Instance.playerHealth;
         }
     }
@@ -114,6 +129,12 @@ public class PlayerHealth : MonoBehaviour
 
         // Desactiva los controles del jugador (disparo, movimiento, cámara)
         EnablePlayerControls(false);
+
+        // Asegura que el indicador de ataque se desactive al morir
+        if (attackIndicatorUI != null)
+        {
+            attackIndicatorUI.SetActive(false);
+        }
 
         // Muestra la pantalla de Game Over
         if (gameOverPanel != null)
@@ -149,8 +170,33 @@ public class PlayerHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// Reinicia el juego cargando la escena actual.
+    /// Activa el indicador de ataque UI por un corto período.
     /// </summary>
+    public void ShowAttackIndicator()
+    {
+        if (attackIndicatorUI == null) return;
+
+        // Si ya hay una coroutine activa, la detenemos para evitar parpadeos y que se superpongan
+        if (attackIndicatorCoroutine != null)
+        {
+            StopCoroutine(attackIndicatorCoroutine);
+        }
+        // Inicia la coroutine para mostrar y luego ocultar el indicador. Ajusta la duración (0.5f) .
+        attackIndicatorCoroutine = StartCoroutine(AttackIndicatorRoutine(0.5f));
+    }
+
+    /// <summary>
+    /// Coroutine para mostrar el indicador de ataque y luego ocultarlo.
+    /// </summary>
+    /// <param name="duration">Tiempo en segundos que el indicador estará visible.</param>
+    private IEnumerator AttackIndicatorRoutine(float duration)
+    {
+        attackIndicatorUI.SetActive(true); // Activa el GameObject de la UI
+        yield return new WaitForSeconds(duration); // Espera el tiempo especificado
+        attackIndicatorUI.SetActive(false); // Desactiva el GameObject de la UI
+        attackIndicatorCoroutine = null; // Limpia la referencia a la coroutine
+    }
+
     public void RestartGame()
     {
         Time.timeScale = 1f; // Reanuda el tiempo del juego
@@ -162,14 +208,10 @@ public class PlayerHealth : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    /// <summary>
-    /// Carga la escena del menú principal.
-    /// </summary>
     public void GoToMainMenu()
     {
         Time.timeScale = 1f; // Reanuda el tiempo
         Cursor.visible = true; // Asegura que el cursor sea visible en el menú
-
         SceneManager.LoadScene("MainMenu"); // Asume que tienes una escena llamada "MainMenu"
     }
 }

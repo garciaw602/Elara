@@ -385,7 +385,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   zombieVoiceClips:
-  - {fileID: 8300000, guid: 4b408c334af9d744e8c4df582d75ca02, type: 3}
+  - {fileID: 8300000, guid: 416392353baedcd419b15ee608004609, type: 3}
   voiceDetectionRadius: 8
   patrolSpeed: 2
   chaseSpeed: 4

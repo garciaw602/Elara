@@ -8,17 +8,14 @@ public class EnemyAI : MonoBehaviour
     public float fieldOfViewAngle = 90f;
     public LayerMask visionObstacleMask;
 
-    // Audio
     [Header("Zombie Voice Settings")]
-    [Tooltip("Los clips de audio para la voz del zombie (gemidos, gruñidos, etc.). Se elegirá uno aleatoriamente para reproducir en loop.")]
     public AudioClip[] zombieVoiceClips;
-    [Tooltip("El radio dentro del cual el jugador puede escuchar la voz del zombie y activar/detener el loop.")]
     public float voiceDetectionRadius = 8f;
 
     private AudioSource audioSource;
     private bool playerInVoiceZone = false;
 
-    // Patrullaje
+    //patrullaje
     public float patrolSpeed = 2f;
     public float chaseSpeed = 4f;
     public Transform[] patrolPoints;
@@ -32,6 +29,11 @@ public class EnemyAI : MonoBehaviour
     private int currentPatrolPointIndex = 0;
     private bool isWaitingAtPatrolPoint = false;
     private float waitTimer = 0f;
+
+    //Control de la barra de vida
+    private EnemyHealth enemyHealth; // Referencia al script EnemyHealth
+    private bool wasChasingPlayer = false; // Bandera para detectar cambios de estado de persecución
+   
 
     void Start()
     {
@@ -71,6 +73,16 @@ public class EnemyAI : MonoBehaviour
         }
         audioSource.loop = true;
         audioSource.playOnAwake = false;
+
+        //  Obtener referencia a EnemyHealth 
+        enemyHealth = GetComponent<EnemyHealth>();
+        if (enemyHealth == null)
+        {
+            Debug.LogError("EnemyHealth no encontrado en el enemigo. Asegúrate de que el script EnemyHealth esté en el mismo GameObject.", this);
+            enabled = false;
+            return;
+        }
+        
     }
 
     void Update()
@@ -99,12 +111,16 @@ public class EnemyAI : MonoBehaviour
 
         HandleAudio(distanceToTarget);
 
+        //  Lógica de comportamiento y visibilidad de la barra de vida
+        bool currentlyChasingPlayer = false;
+
         if (playerDetectedByVision || (playerDetectedByDistance && target != null))
         {
             agent.speed = chaseSpeed;
             agent.SetDestination(target.position);
             LookAtTarget();
             isWaitingAtPatrolPoint = false;
+            currentlyChasingPlayer = true;
         }
         else
         {
@@ -122,6 +138,17 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
+
+        if (currentlyChasingPlayer && !wasChasingPlayer)
+        {
+            enemyHealth.SetHealthBarVisibility(true); // El enemigo acaba de empezar a perseguir
+        }
+        else if (!currentlyChasingPlayer && wasChasingPlayer)
+        {
+            enemyHealth.SetHealthBarVisibility(false); // El enemigo acaba de dejar de perseguir
+        }
+        wasChasingPlayer = currentlyChasingPlayer; // Actualiza el estado para el próximo frame
+       
     }
 
     void HandleAudio(float distanceToTarget)
