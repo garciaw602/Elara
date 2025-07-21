@@ -3528,7 +3528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: StoryScene
-  triggerKey: 27
+  triggerKey: 9
 --- !u!4 &835644313
 Transform:
   m_ObjectHideFlags: 0
@@ -4356,7 +4356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c0a0435b2f1ee45b5a2df5489b978c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneName: Level1
+  gameSceneName: StoryScene
   optionsSceneName: OptionsScene
   creditsSceneName: CreditsScene
   startButton: {fileID: 159286215}
