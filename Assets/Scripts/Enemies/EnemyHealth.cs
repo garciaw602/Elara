@@ -3,39 +3,38 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public float maxHealth = 50f; 
+    [Header("Health Settings")]
+    public float maxHealth = 50f;
     private float currentHealth;
 
-    //----- Barra de Vida UI ----
-    public GameObject healthBarUIPrefab; 
-    public Vector3 healthBarOffset = new Vector3(0, 1.5f, 0); // Posición relativa de la barra sobre el enemigo
-    private Slider healthBarSlider; // Referencia al Slider dentro del Canvas instanciado
-    private Transform healthBarCanvasTransform; // Referencia al transform del Canvas para rotación
+    [Header("UI Health Bar Settings")]
+    [Tooltip("Prefab del Canvas de la barra de vida del enemigo.")]
+    public GameObject healthBarUIPrefab;
+    [Tooltip("Posición relativa de la barra de vida sobre el enemigo.")]
+    public Vector3 healthBarOffset = new Vector3(0, 1.5f, 0);
 
+    // Referencias a los componentes de la barra de vida instanciada
+    private Slider healthBarSlider;
+    private Transform healthBarCanvasTransform;
 
-    public GameObject ammoBoxPrefab;//*****CAJA DE MUNICION
-    public float spawnOffsetY = 0.5f;//***** Un valor de 0.5f es un buen punto de partida, ajusta según el tamaño de tu caja
+    [Header("Drops Settings")]
+    public GameObject ammoBoxPrefab; //*****CAJA DE MUNICION
+    public float spawnOffsetY = 0.5f; //***** Un valor de 0.5f es un buen punto de partida, ajusta según el tamaño de tu caja
 
+    [Header("Death Settings")]
     public float destroyDelay = 0f; //  Poner un retardo o no (0f = inmediato)
 
     private EnemySpawner mySpawner;
 
-
-
-
     void Awake()
     {
         currentHealth = maxHealth;
-        // Si tienes pooling de objetos, esto se llamará cuando el objeto se activa
-        // Si no tienes pooling, se llama al inicio.
 
         // --- Instanciar la barra de vida al inicio ---
         if (healthBarUIPrefab != null)
         {
             GameObject healthBarInstance = Instantiate(healthBarUIPrefab, transform.position + healthBarOffset, Quaternion.identity);
             healthBarCanvasTransform = healthBarInstance.transform;
-
-            // Encontrar el Slider dentro del Canvas instanciado
             healthBarSlider = healthBarInstance.GetComponentInChildren<Slider>();
 
             if (healthBarSlider != null)
@@ -43,55 +42,38 @@ public class EnemyHealth : MonoBehaviour
                 healthBarSlider.maxValue = maxHealth;
                 healthBarSlider.value = currentHealth;
             }
-            else
-            {
-                Debug.LogWarning("EnemyHealth: No se encontró un componente Slider dentro del prefab de la barra de vida.", this);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("EnemyHealth: No se ha asignado un prefab de barra de vida en el Inspector.", this);
+
+            // --- ¡NUEVO! Desactivar la barra de vida al instanciarla ---
+            SetHealthBarVisibility(false);
         }
     }
 
     void Update()
     {
-        // --- Actualizar posición y rotación de la barra de vida ---
+        // Asegura que la barra de vida siga al enemigo y mire a la cámara
         if (healthBarCanvasTransform != null)
         {
-            // La barra de vida sigue la posición del enemigo con un offset
             healthBarCanvasTransform.position = transform.position + healthBarOffset;
 
-            // Opcional: Hacer que la barra de vida siempre mire a la cámara del jugador
-            // Asume que la cámara principal es la del jugador
+            // Asegúrate de que mire a la cámara principal
             if (Camera.main != null)
             {
-                // Solo rotar en el eje Y para que no se incline
-                Vector3 lookAtDir = Camera.main.transform.position - healthBarCanvasTransform.position;
-                lookAtDir.y = 0; // Importante para que no se incline
-                if (lookAtDir != Vector3.zero)
-                {
-                    healthBarCanvasTransform.rotation = Quaternion.LookRotation(-lookAtDir); // -lookAtDir para que mire hacia la cámara
-                }
+                healthBarCanvasTransform.LookAt(healthBarCanvasTransform.position + Camera.main.transform.rotation * Vector3.forward,
+                                                 Camera.main.transform.rotation * Vector3.up);
             }
         }
     }
 
-    public void SetSpawner(EnemySpawner spawner)
-    {
-        mySpawner = spawner;
-    }
-
-    // Este método será llamado por la bala cuando impacte
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount; // Reduce la vida actual
-        //Debug.Log(gameObject.name + " ha recibido " + amount + " de daño. Vida actual: " + currentHealth);
+        currentHealth -= amount;
+        Debug.Log(gameObject.name + " ha recibido " + amount + " de daño. Vida actual: " + currentHealth);
 
-        // --- Actualizar el Slider de la barra de vida ---
         if (healthBarSlider != null)
         {
             healthBarSlider.value = currentHealth;
+            // --- ¡NUEVO! Asegurarse de que la barra se muestre si recibe daño ---
+            SetHealthBarVisibility(true);
         }
 
         if (currentHealth <= 0)
@@ -103,20 +85,17 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " ha muerto!");
-        
-        
-        
-        
-        
-        //********* LÓGICA DE LA CAJA DE MUNICIÓN AL MORIR 
-        if (ammoBoxPrefab == null) // Añade esta comprobación
+
+        // Lógica para soltar la caja de munición
+        // ******** LÓGICA DE LA CAJA DE MUNICIÓN --
+        if (ammoBoxPrefab == null) // Agregar esta comprobación
         {
             Debug.LogError("¡El Prefab de la caja de munición NO está asignado en el Inspector para " + gameObject.name + "!");
             return; // Salir de la función si el prefab no está asignado
         }
         Vector3 spawnPosition = transform.position + Vector3.up * spawnOffsetY;
         Instantiate(ammoBoxPrefab, spawnPosition, Quaternion.identity);
-        // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN ---
+        // ******** FIN DE LA LÓGICA DE LA CAJA DE MUNICIÓN --
 
         if (mySpawner != null)
         {
@@ -133,20 +112,21 @@ public class EnemyHealth : MonoBehaviour
             Destroy(healthBarCanvasTransform.gameObject);
         }
 
-        //  Agregar efectos de muerte:
-        // - Reproducir una animación de muerte
-        // - Reproducir un sonido de muerte
-        // - Instanciar una explosión o partículas
-
         // Destruye el GameObject del enemigo después de un pequeño retardo
         Destroy(gameObject, destroyDelay);
-
-        // Desactivar el enemigo inmediatamente si se necesita algo más antes de destruirlo
-        // gameObject.SetActive(false);
     }
 
-    //public void SetSpawner(EnemySpawner callingSpawner)
-    //{
-    //    spawner = callingSpawner;
-    //}
+    // --- ¡NUEVO MÉTODO! Controla la visibilidad de la barra de vida ---
+    public void SetHealthBarVisibility(bool isVisible)
+    {
+        if (healthBarCanvasTransform != null)
+        {
+            healthBarCanvasTransform.gameObject.SetActive(isVisible);
+        }
+    }
+
+    public void SetSpawner(EnemySpawner callingSpawner)
+    {
+        mySpawner = callingSpawner;
+    }
 }
