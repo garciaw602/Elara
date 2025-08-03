@@ -12,7 +12,7 @@ Como desarrollador en ELARA, fui responsable de programar las mecánicas de jueg
 ---
 🎮 [Juega ELARA en itch.io](https://wilsongarcia.itch.io/elara)
 
-![Un GIF de gameplay mostrando los efectos de sangre al morir](https://i.ibb.co/ZRPbNWjB/57240d56-b4ac-4cd7-9bff-02458eef027d.gif)
+![Un GIF de gameplay mostrando los efectos de sangre al morir](https://ibb.co/V0Zk321g)
 ---
 # 🎮 Elara – Game Jam Project
 
