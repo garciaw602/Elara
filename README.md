@@ -207,5 +207,25 @@ Carlos Rabelo, Miguel Benavides, Julian Trujillo, and Wilson García.
 
 
 
-
+<div align="center">
+  <h2>👥 Team</h2>
+  <ul>
+    <li style="list-style-type: none;">
+      <img src="https://flagcdn.com/mx.svg" width="20" alt="Bandera de México" style="margin-right: 5px;">
+      <strong>Carlos Rabelo</strong> – 3D Generalist, Technical Artist
+    </li>
+    <li style="list-style-type: none;">
+      <img src="https://flagcdn.com/co.svg" width="20" alt="Bandera de Colombia" style="margin-right: 5px;">
+      <strong>Miguel Benavides</strong> – Programmer, Game Mechanics
+    </li>
+    <li style="list-style-type: none;">
+      <img src="https://flagcdn.com/co.svg" width="20" alt="Bandera de Colombia" style="margin-right: 5px;">
+      <strong>Julian Trujillo</strong> – Project Manager, Developer
+    </li>
+    <li style="list-style-type: none;">
+      <img src="https://flagcdn.com/co.svg" width="20" alt="Bandera de Colombia" style="margin-right: 5px;">
+      <strong>Wilson García</strong> – Developer, Sound Design
+    </li>
+  </ul>
+</div>
 
