@@ -12,10 +12,9 @@ Como desarrollador en ELARA, fui responsable de programar las mecánicas de jueg
 ---
 🎮 [Juega ELARA en itch.io](https://wilsongarcia.itch.io/elara)
 
-<center>
+<div align="center">
 ![](https://raw.githubusercontent.com/garciaw602/Elara/main/57240d56-b4ac-4cd7-9bff-02458eef027d.gif)
-</center>
-
+</div>
 ---
 # 🎮 Elara – Game Jam Project
 
