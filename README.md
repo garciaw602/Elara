@@ -10,7 +10,7 @@ Como desarrollador y diseñador de sonido en ELARA, fui responsable de programar
 -   **Modelado y Animaciones:** Utilicé herramientas de IA para asistir en la creación de **modelos y animaciones**, agilizando el proceso de desarrollo y permitiendo más iteraciones en los modelos de zombis.
 
 ---
-
+🎮 [Juega ELARA en itch.io](https://wilsongarcia.itch.io/elara)
 
 
 # 🎮 Elara – Game Jam Project
