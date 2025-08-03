@@ -187,3 +187,16 @@ Special thanks to the Game Jam organizers and the communities that inspire creat
 Carlos Rabelo, Miguel Benavides, Julian Trujillo, and Wilson García.
 
 
+
+### 🙋‍♂️ Mi Rol y Contribuciones: Wilson García
+
+Como desarrollador y diseñador de sonido en ELARA, fui responsable de programar las mecánicas de juego principales y de crear la atmósfera de tensión sonora que define el género del juego. Mis principales responsabilidades incluyeron:
+
+#### **Sistemas de Jugabilidad**
+
+-   **Movimiento del Jugador:** Implementé el sistema de movimiento fluido en primera persona, el salto, el sprint y la interacción con el entorno para una experiencia inmersiva.
+-   **Disparo de Armas:** Desarrollé la lógica de disparo, retroceso y recarga para las distintas armas, asegurando una sensación de combate realista y satisfactoria.
+-   **Efectos Visuales:** Programé los efectos de partículas y eventos visuales para aumentar el impacto del juego, incluyendo la **sangre al morir** y la **explosión de gas** de barriles, que sirven como elementos estratégicos en el combate.
+-   **Modelado y Animaciones:** Utilicé herramientas de IA para asistir en la creación de **modelos y animaciones**, agilizando el proceso de desarrollo y permitiendo más iteraciones en los modelos de zombis.
+
+
