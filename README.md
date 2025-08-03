@@ -50,10 +50,10 @@ In the year 2040, the world lies in ruins after the outbreak of the Elara-X viru
 
 ## 👥 Team
 
-- **Carlos Rabelo** – 3D Generalist, Technical Artist
-- **Miguel Benavides** – Programmer, Game Mechanics
-- **Julian Trujillo** – Project Manager, Developer
-- **Wilson García** – Developer, Sound Design
+- 🇲🇽 **Carlos Rabelo** – 3D Generalist, Technical Artist
+- 🇨🇴 **Miguel Benavides** – Programmer, Game Mechanics
+- 🇨🇴 **Julian Trujillo** – Project Manager, Developer
+- 🇨🇴 **Wilson García** – Developer, Sound Design
 
 ---
 
