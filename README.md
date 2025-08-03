@@ -1,6 +1,6 @@
 ### 🙋‍♂️ Mi Rol y Contribuciones: Wilson García
 
-Como desarrollador y diseñador de sonido en ELARA, fui responsable de programar las mecánicas de juego principales y de crear la atmósfera de tensión sonora que define el género del juego. Mis principales responsabilidades incluyeron:
+Como desarrollador en ELARA, fui responsable de programar las mecánicas de juego principales. Mis principales responsabilidades incluyeron:
 
 #### **Sistemas de Jugabilidad**
 
