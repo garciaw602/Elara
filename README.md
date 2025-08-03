@@ -12,7 +12,7 @@ Como desarrollador en ELARA, fui responsable de programar las mecánicas de jueg
 ---
 🎮 [Juega ELARA en itch.io](https://wilsongarcia.itch.io/elara)
 
-[GIF de un zombie acercándose]([url=https://ibb.co/V0Zk321g][img]https://i.ibb.co/ZRPbNWjB/57240d56-b4ac-4cd7-9bff-02458eef027d.gif[/img][/url])
+[](https://i.ibb.co/ZRPbNWjB/57240d56-b4ac-4cd7-9bff-02458eef027d.gif)
 
 ---
 # 🎮 Elara – Game Jam Project
