@@ -12,7 +12,9 @@ Como desarrollador en ELARA, fui responsable de programar las mecánicas de jueg
 ---
 🎮 [Juega ELARA en itch.io](https://wilsongarcia.itch.io/elara)
 
+[GIF de un zombie acercándose](https://ibb.co/V0Zk321g)
 
+---
 # 🎮 Elara – Game Jam Project
 
 **Elara** is a first-person narrative puzzle game developed during a Game Jam using Unity. Set in a surreal, emotional world, the player navigates through memories and illusions after a heartbreak. The game explores themes of love, loss, and mental collapse.
